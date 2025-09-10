@@ -18,6 +18,7 @@ public sealed class TurnManager : MonoSingleton<TurnManager>
     private bool _battleStarted = false;
     private bool _battleOver = false;
 
+
     void Start()
     {
         StartTurn();
