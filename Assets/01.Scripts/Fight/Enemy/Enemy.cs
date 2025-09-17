@@ -1,7 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using System.Linq;
+using UnityEngine;
 
 public class Enemy : Character
 {
@@ -13,6 +14,10 @@ public class Enemy : Character
     [Header("현재 상태")]
     [SerializeField]
     private EnemyState _currentState = null;
+
+    // 콜백 묶음
+    private Action<int> _requestChange;
+    private Action _reportDone;
     void Awake()
     {
         _states = GetComponentsInChildren<EnemyState>(true).ToList();
@@ -20,6 +25,11 @@ public class Enemy : Character
         {
             state.gameObject.SetActive(false);
         }
+        _requestChange = ChangeState;
+        _reportDone = OnActionDone;
+        // 모든 상태에 주입
+        foreach (var state in _states)
+            state.BindCallbacks(_requestChange, _reportDone);
     }
     void Start()
     {
@@ -27,8 +37,6 @@ public class Enemy : Character
             TurnManager.Instance.OnTurnChanged += TurnChanged;
 
         _currentState = _states[0];
-        _currentState.OnRequestChange += ChangeState; // 초기 상태 구독
-        _currentState.OnActionDone += OnActionDone;
 
         _currentState.Enter();
     }
@@ -47,11 +55,6 @@ public class Enemy : Character
     void OnDestroy()
     {
         TurnManager.Instance.OnTurnChanged -= TurnChanged;
-        if (_currentState != null)
-        {
-            _currentState.OnRequestChange -= ChangeState;
-            _currentState.OnActionDone -= OnActionDone;
-        }
     }
     /// <summary>
     /// 현재 턴이 적의 턴일시 state의 Action()함수를 통해 행동 시행
@@ -88,13 +91,8 @@ public class Enemy : Character
         var next = _states[stateIndex];
         if (_currentState == next) return;
 
-        _currentState.OnRequestChange -= ChangeState;
-        _currentState.OnActionDone    -= OnActionDone;
         _currentState.Exit();
-
         _currentState = next;
-        _currentState.OnRequestChange += ChangeState;
-        _currentState.OnActionDone    += OnActionDone;
         _currentState.Enter();
     }
 

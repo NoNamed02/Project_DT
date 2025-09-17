@@ -1,23 +1,26 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
 public class EnemyState : MonoBehaviour
 {
     private Enemy _enemy;
-    public event System.Action<int> OnRequestChange;
-    public event System.Action OnActionDone;
-    protected void ActionDone() => OnActionDone?.Invoke();
 
     [SerializeField]
     protected int _nextStateIndex = 0;
+
+    protected Action<int> RequestChange;   // 전이 요청
+    protected Action ReportDone;           // 액션 종료 보고
 
     void Awake()
     {
         _enemy = transform.parent.GetComponent<Enemy>();
     }
-    protected void RequestChange(int stateIndex)
+    // 주입 지점
+    public void BindCallbacks(Action<int> requestChange, Action reportDone)
     {
-        OnRequestChange?.Invoke(stateIndex);
+        RequestChange = requestChange;
+        ReportDone = reportDone;
     }
 
     /// <summary>
@@ -32,8 +35,7 @@ public class EnemyState : MonoBehaviour
     /// </summary>
     public virtual void Action()
     {
-        RequestChange(_nextStateIndex);
-        ActionDone();
+        ReportDone?.Invoke();
     }
 
     /// <summary>
@@ -51,4 +53,11 @@ public class EnemyState : MonoBehaviour
     {
 
     }
+
+    /// <summary>
+    /// enemy객체에게 state 변환을 요청함
+    /// </summary>
+    /// <param name="stateIndex"></param>
+    // 상태 내부에서 필요 시 호출
+    protected void RequestStateChange(int idx) => RequestChange?.Invoke(idx);
 }
