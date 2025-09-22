@@ -36,6 +36,7 @@ public class EnemyState : MonoBehaviour
     public virtual void Action()
     {
         ReportDone?.Invoke();
+        RequestStateChange(_nextStateIndex);
     }
 
     /// <summary>
