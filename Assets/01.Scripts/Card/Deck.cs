@@ -35,6 +35,15 @@ public class Deck : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 덱에 카드가 남아 있는가 확인
+    /// </summary>
+    /// <returns></returns>
+    public bool IsDeckEmpty()
+    {
+        return _cards.Count == 0;
+    }
+
     // 덱 섞기 = 피셔 예이츠 제자리 셔플
     private void SuffleDeck()
     {
@@ -46,23 +55,11 @@ public class Deck : MonoBehaviour
     }
 
 
-    // 난수 드로우 기능
-    // public int DrawCard()
-    // {
-    //     if (_cards.Count == 0)
-    //     {
-    //         Debug.Log("deck is null");
-    //     }
-    //     else
-    //     {
-    //         int randCardIndex = Random.Range(0, _cards.Count);
-
-    //         int cardId = _cards[randCardIndex];
-    //         _cards.RemoveAt(randCardIndex);
-
-    //         return cardId;
-    //     }
-    // }
+    // 난수 드로우 기능 구현 필요
+    public int RandomDrawCard()
+    {
+        return 0;
+    }
 
     // 자신의 덱을 반환
     public List<int> GetCards()
@@ -71,7 +68,7 @@ public class Deck : MonoBehaviour
     }
 
     // 덱 세팅
-    public void SetCards(List<int> cardIdData)
+    public void SetDeck(List<int> cardIdData)
     {
         _cards = cardIdData;
     }
@@ -80,5 +77,11 @@ public class Deck : MonoBehaviour
     private void ResetDeck()
     {
         _cards.Clear();
+    }
+
+    // 덱에 카드를 상단에 세팅
+    public void SetCardToTop(int cardId)
+    {
+        _cards.Add(cardId);
     }
 }
