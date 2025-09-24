@@ -737,7 +737,7 @@ MonoBehaviour:
   _targets:
   - {fileID: 971227791}
   - {fileID: 1956635905}
-  liftFactor: 0.4
+  _liftFactor: 0.5
   LineCount: 20
 --- !u!4 &1628434229
 Transform:
