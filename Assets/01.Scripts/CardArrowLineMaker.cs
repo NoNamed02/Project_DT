@@ -1,11 +1,13 @@
 using System.Collections.Generic;
+using Unity.VisualScripting.Dependencies.NCalc;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class CardArrowLineMaker : MonoBehaviour
+public class CardArrowLineMaker : MonoSingleton<CardArrowLineMaker>
 {
     [SerializeField]
     private Transform[] _targets = new Transform[2];
+    public Transform[] Targets => _targets;
     private Vector3 _middlePoint;
     private LineRenderer _arrowLine;
 
@@ -22,7 +24,6 @@ public class CardArrowLineMaker : MonoBehaviour
     private readonly List<Vector3> _points = new List<Vector3>(64);
 
     private Vector3[] _positionsBuffer;
-
     void Start()
     {
         _arrowLine = GetComponent<LineRenderer>();
@@ -30,39 +31,14 @@ public class CardArrowLineMaker : MonoBehaviour
     }
     void Update()
     {
-        if (Input.GetMouseButtonDown(0) && IsPointerOverUI("Card"))
+        if (_isDragging)
         {
-            _isDragging = true;
-        }
-        if (Input.GetMouseButtonUp(0))
-        {
-            _isDragging = false;
-        }
-        UpdateArrowEndPoint();
-        _middlePoint = CalculateMiddlePointVertex();
-        DrawLine();
-    }
-
-    private void UpdateArrowEndPoint()
-    {
-        if (_isDragging && Input.GetMouseButton(0))
-        {
-            Vector3 mousePos = Input.mousePosition;
-            Vector3 worldPos;
-            RectTransformUtility.ScreenPointToWorldPointInRectangle(
-                _targets[1].GetComponent<RectTransform>(),
-                mousePos,
-                Camera.main,
-                out worldPos
-            );
-
-            _targets[1].position = worldPos;
-        }
-        else
-        {
-            _targets[1].position = _targets[0].position;
+            _middlePoint = CalculateMiddlePointVertex();
+            DrawLine();
         }
     }
+
+    // 베지에 곡선 중점 찾아서 반환하는 함수
     private Vector3 CalculateMiddlePointVertex()
     {
         _middlePoint = Vector3.Lerp(_targets[0].position, _targets[1].position, 0.5f);
@@ -72,6 +48,8 @@ public class CardArrowLineMaker : MonoBehaviour
 
         return _middlePoint;
     }
+
+    // 곡선을 그리는 함수
     private void DrawLine()
     {
         _points.Clear();
@@ -90,7 +68,9 @@ public class CardArrowLineMaker : MonoBehaviour
         _arrowLine.positionCount = _points.Count;
         _arrowLine.SetPositions(_positionsBuffer);
     }
-    private bool IsPointerOverUI(string tag)
+
+    // 마우스로 누른곳에 해당 태그 객체가 있는지 bool로 확인 return
+    public bool IsPointerOverUI(string tag)
     {
         PointerEventData pointerData = new PointerEventData(EventSystem.current);
         pointerData.position = Input.mousePosition;
@@ -105,5 +85,32 @@ public class CardArrowLineMaker : MonoBehaviour
         }
 
         return false;
+    }
+
+    /// <summary>
+    /// set linedrawer start point == selected card
+    /// </summary>
+    public void SetStartPoint(Vector3 cardPoint)
+    {
+        _targets[0].position = cardPoint;
+    }
+
+    /// <summary>
+    /// set end point to mouse point
+    /// </summary>
+    /// <param name="mousePoint"></param>
+    public void SetEndPoint(Vector3 mousePoint)
+    {
+        _targets[1].position = mousePoint;
+    }
+
+    public void SetIsDragging(bool value)
+    {
+        _isDragging = value;
+    }
+
+    public void ActiveLineDrawer(bool value)
+    {
+        _arrowLine.enabled = value;
     }
 }
