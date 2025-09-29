@@ -197,6 +197,7 @@ MonoBehaviour:
   _handArea: {fileID: 1004940234}
   _card: {fileID: 5173240273423711775, guid: f412cd63254394640b0b841f994b4fbe, type: 3}
   _drawDeck: {fileID: 229946983}
+  _graveyardDeck: {fileID: 1962736736}
   _player: {fileID: 1913707465}
   _selectCard: {fileID: 0}
   _canvas: {fileID: 1897367707}
@@ -474,7 +475,7 @@ GameObject:
   - component: {fileID: 496437084}
   m_Layer: 6
   m_Name: Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -564,7 +565,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d76c08c5864148888b29f4c24f44186, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _hp: 10
+  _hp: 15
   _states: []
   _currentState: {fileID: 0}
 --- !u!61 &496437084
