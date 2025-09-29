@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class CardManager : MonoBehaviour
@@ -13,6 +14,10 @@ public class CardManager : MonoBehaviour
     [Header("draw Deck")]
     [SerializeField]
     private Deck _drawDeck;
+
+    [Header("graveyard Deck")]
+    [SerializeField]
+    private Deck _graveyardDeck;
 
     [Header("player object")]
     [SerializeField]
@@ -39,6 +44,8 @@ public class CardManager : MonoBehaviour
     {
         GameObject card = Instantiate(_card, _handArea);
         card.GetComponent<Card>().Init(_canvas, cardID);
+
+        card.GetComponent<Card>().OnUsingCard += UsingCard;
     }
 
     /// <summary>
@@ -46,8 +53,13 @@ public class CardManager : MonoBehaviour
     /// </summary>
     /// <param name="target"></param>
     /// <param name="cardID"></param>
-    public void UsedCard(Character target, int cardID)
+    public void UsingCard(int cardID, Character target)
     {
         Debug.Log($"target:{target} / card : {cardID}");
+        // forTest
+        BattleManager.Instance.ApplyDamage(target, 5);
+        Debug.Log("적에게 5 데미지를 주었습니다");
+
+        _graveyardDeck.SetCardToTop(cardID); // todo : 뭔가 뭔가 이상한 구조일 것 같음. 수정해야할 필요가 있지 않을까????
     }
 }
