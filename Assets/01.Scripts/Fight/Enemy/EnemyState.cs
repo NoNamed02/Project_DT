@@ -55,6 +55,11 @@ public class EnemyState : MonoBehaviour
 
     }
 
+    public int GetHP()
+    {
+        return _enemy.HP;
+    }
+
     /// <summary>
     /// enemy객체에게 state 변환을 요청함
     /// </summary>
