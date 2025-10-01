@@ -1,4 +1,4 @@
-"ID","Cost","Type","Instruction"
-"0001","1","attack","테스트용 공격1"
-"0002","2","attack","테스트용 공격2"
-"0003","3","attack","테스트용 공격3"
+"ID","Name","Cost","Type","Instruction","Targeting","Rarity","Artwork","DiscardPolicy","Tags"
+"0001","단검 공격","2","attack","상대에서 단검을 던져 <b>3 데미지</b>를 줍니다.","enemy/single","common","","GraveyardDeck",""
+"0002","방어","1","defence","<b>3 방어</b> 얻습니다.","player","common","","GraveyardDeck",""
+"0003","기습","1","attack","상대를 기습하여 <b>5 데미지</b>를 줍니다.","enemy/single","common","","GraveyardDeck",""
