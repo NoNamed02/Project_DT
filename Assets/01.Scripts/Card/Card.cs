@@ -5,15 +5,14 @@ using UnityEngine.EventSystems;
 
 public class Card : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler
 {
-    [Header("Card ID")]
-    [SerializeField]
     private int _cardID = -1; // 초기값, -1인 상태로 사용되면 예외처리 핸들링
-    // public int CardID => _cardID;
+    [Header("Card ID")]
+    public int CardID { get => _cardID; set => _cardID = value; }
 
     private Canvas _canvas;
-    
+
     // if using card, than call this delegate
-    public event System.Action<int, Character> OnUsingCard;
+    public event System.Action<Card, Character> OnUsingCard;
 
     /// <summary>
     /// 카드의 여러 값을 생싱시 세팅
@@ -24,11 +23,6 @@ public class Card : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHand
         _canvas = canvas;
         _cardID = id;
         transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = _cardID.ToString();
-    }
-
-    public int GetCardID()
-    {
-        return _cardID;
     }
 
     // 드래그 시작 처리
@@ -45,7 +39,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHand
         Vector3 start = cam.ScreenToWorldPoint(sp);
         start.z = 0f;
         CardArrowLineMaker.Instance.SetStartPoint(start);
-        
+
     }
 
     // 드래그 중 처리
@@ -77,8 +71,13 @@ public class Card : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHand
         if (hit.collider.gameObject.tag == "Enemy")
         {
             Debug.Log("Hit to enemy");
-            OnUsingCard.Invoke(_cardID, hit.collider.gameObject.GetComponent<Character>());
-            Destroy(gameObject); // todo : des는 어쩔 수 없다고 생각해도, 무덤으로 가는걸 여기서 처리하는게 나은가??
+            OnUsingCard.Invoke(this, hit.collider.gameObject.GetComponent<Character>());
+            //Destroy(gameObject); // todo : des는 어쩔 수 없다고 생각해도, 무덤으로 가는걸 여기서 처리하는게 나은가??
         }
+    }
+
+    public void ActiveCard()
+    {
+        Destroy(gameObject);
     }
 }

@@ -53,13 +53,14 @@ public class CardManager : MonoBehaviour
     /// </summary>
     /// <param name="target"></param>
     /// <param name="cardID"></param>
-    public void UsingCard(int cardID, Character target)
+    public void UsingCard(Card card, Character target)
     {
-        Debug.Log($"target:{target} / card : {cardID}");
+        Debug.Log($"target:{target} / card : {card.CardID}");
         // forTest
         BattleManager.Instance.ApplyDamage(target, 5);
         Debug.Log("적에게 5 데미지를 주었습니다");
 
-        _graveyardDeck.SetCardToTop(cardID); // todo : 뭔가 뭔가 이상한 구조일 것 같음. 수정해야할 필요가 있지 않을까????
+        card.ActiveCard(); // 카드 사용 처리
+        _graveyardDeck.SetCardToTop(card.CardID);
     }
 }
