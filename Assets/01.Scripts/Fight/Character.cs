@@ -2,28 +2,37 @@ using UnityEngine;
 
 public class Character : MonoBehaviour
 {
-    [SerializeField]
     protected int _hp = 10;
 
-    public int GetHP()
+    public int HP
     {
-        return _hp;
+        get => _hp;
+        set => _hp = value;
     }
 
-    public void SetHP(int HP)
-    {
-        _hp = HP;
-    }
+
+    [SerializeField]
+    protected int _shield = 0;
 
     public void TakeDamage(int amount)
     {
-        _hp -= amount;
+        if (_shield >= amount)
+        {
+            _shield -= amount;
+        }
+        else
+        {
+            amount -= _shield;
+            _hp -= amount;
+        }
+
         if (_hp <= 0)
         {
             _hp = 0;
             Die();
         }
     }
+
     private void Die()
     {
         Debug.Log($"{name} is dead");
