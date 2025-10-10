@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class CardManager : MonoBehaviour
@@ -56,9 +57,11 @@ public class CardManager : MonoBehaviour
     public void UsingCard(Card card, Character target)
     {
         Debug.Log($"target:{target} / card : {card.CardID}");
-        // forTest
-        BattleManager.Instance.ApplyDamage(target, 5);
-        Debug.Log("적에게 5 데미지를 주었습니다");
+
+        foreach (var cardeffect in card.cardEffects)
+        {
+            cardeffect.Execute(target, card);
+        }
 
         card.ActiveCard(); // 카드 사용 처리
         _graveyardDeck.SetCardToTop(card.CardID);
