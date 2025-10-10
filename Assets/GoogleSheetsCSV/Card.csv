@@ -1,4 +1,4 @@
-"ID","Name","Cost","Type","Instruction","Targeting","Rarity","Artwork","DiscardPolicy","Tags"
-"0001","단검 공격","2","attack","상대에서 단검을 던져 <b>3 데미지</b>를 줍니다.","enemy/single","common","","GraveyardDeck",""
-"0002","방어","1","defence","<b>3 방어</b> 얻습니다.","player","common","","GraveyardDeck",""
-"0003","기습","1","attack","상대를 기습하여 <b>5 데미지</b>를 줍니다.","enemy/single","common","","GraveyardDeck",""
+"ID","Name","Cost","Type","Instruction","Targeting","Rarity","Artwork","DiscardPolicy","Effect","EffectAmount","EffectHoldingTime","Tags"
+"0001","단검 공격","2","attack","상대에서 단검을 던져 <b>3 데미지</b>를 줍니다.","enemy/single","common","","GraveyardDeck","Damage","3","0",""
+"0002","방어","1","defence","<b>3 방어</b> 얻습니다.","player","common","","GraveyardDeck","Defence","3","0",""
+"0003","연속 공격","1","attack","연속으로 공격하여 <b>2 데미지를 2번<\b>줍니다.","enemy/single","common","","GraveyardDeck","Damage/Damage","2/2","0/0",""

@@ -23,3 +23,7 @@ MonoBehaviour:
   - single
   rarity: common
   discardPolicy: 
+  effect:
+  - Damage
+  effectAmount: 03000000
+  effectHoldingTime: 00000000

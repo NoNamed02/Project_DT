@@ -21,3 +21,7 @@ MonoBehaviour:
   - player
   rarity: common
   discardPolicy: 
+  effect:
+  - Defence
+  effectAmount: 03000000
+  effectHoldingTime: 00000000

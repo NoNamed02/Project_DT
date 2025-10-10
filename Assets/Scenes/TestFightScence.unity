@@ -252,8 +252,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -122, y: 60}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchoredPosition: {x: -278.66998, y: 91.57001}
+  m_SizeDelta: {x: 473.34, y: 93.14}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &72082571
 MonoBehaviour:
@@ -460,7 +460,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 684f1e5fa139140849a0e2ecc0367249, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cards: 01000000020000000300000004000000
+  _cards: 01000000020000000300000001000000
 --- !u!1 &496437080
 GameObject:
   m_ObjectHideFlags: 0
@@ -849,8 +849,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 0, y: 120}
-  m_SizeDelta: {x: 0, y: 200}
+  m_AnchoredPosition: {x: 0, y: 210.66998}
+  m_SizeDelta: {x: 0, y: 381.34}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1004940235
 MonoBehaviour:
@@ -1526,7 +1526,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c87e06e54a0c3134a9b71bc88661628c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardSpecs: []
+  cardSpecs:
+  - {fileID: 11400000, guid: 4c9adb8f0e9915a41bb1646134311c36, type: 2}
+  - {fileID: 11400000, guid: 7fb6311d3dc71b249907ed565d02fbe4, type: 2}
+  - {fileID: 11400000, guid: 72f6c2aa543022e4582e3cae3cee8e3e, type: 2}
+  cardDamageEffects:
+  - {fileID: 11400000, guid: b6168b152a4974b10ac6fd5c797427b0, type: 2}
+  - {fileID: 11400000, guid: ad70da4b2d9a14e39a59f742d9bd0fe4, type: 2}
+  - {fileID: 11400000, guid: f7ead9973a04e4d37a9ced077d558d9c, type: 2}
+  - {fileID: 11400000, guid: 0bbf45e16d7394859802f37a0fc684b7, type: 2}
+  - {fileID: 11400000, guid: 1be5145b6ae3d484d9989662ccef8821, type: 2}
+  - {fileID: 11400000, guid: 186fe00667506422f924357e8b327d68, type: 2}
 --- !u!1 &1897367704
 GameObject:
   m_ObjectHideFlags: 0
