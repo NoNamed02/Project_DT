@@ -2,10 +2,11 @@ using UnityEngine;
 using UnityEditor;
 using System.IO;
 using System.Text.RegularExpressions;
+using Unity.VisualScripting;
 
 public class AssetDataMaker : MonoBehaviour
 {
-    [MenuItem("CustomFunc/Card Generator/Generate Attack Cards")]
+    [MenuItem("CustomFunc/Card Generator/Generate CardSpecData")]
     public static void GenerateAttackCards()
     {
         string path = "Assets/GoogleSheetsCSV/Card.csv"; // CSV 경로
@@ -29,6 +30,43 @@ public class AssetDataMaker : MonoBehaviour
             string[] targeting = parts[5].Trim('"').Split('/');
             string rarity = parts[6].Trim('"');
             string discardPolicy = parts[7].Trim('"');
+            string[] effect = parts[9].Trim('"').Split('/');
+            string[] effectAmountStr = parts[10].Trim('"').Split('/');
+            string[] effectHoldingTimeStr = parts[11].Trim('"').Split('/');
+
+            int[] effectAmount = new int[effectAmountStr.Length];
+            for (int j = 0; j < effectAmount.Length; j++)
+            {
+                string word = effectAmountStr[j].Trim();
+                if (int.TryParse(word, out int value))
+                {
+                    effectAmount[j] = value;
+                }
+                else
+                {
+                    Debug.LogWarning($"[ID {id}] EffectAmount 변환 실패: '{word}'");
+                    effectAmount[j] = -1;
+                }
+            }
+
+            int[] effectHoldingTime = new int[effectHoldingTimeStr.Length];
+            for (int j = 0; j < effectHoldingTime.Length; j++)
+            {
+                string word = effectHoldingTimeStr[j].Trim();
+                if (int.TryParse(word, out int value))
+                {
+                    effectHoldingTime[j] = value;
+                }
+                else
+                {
+                    Debug.LogWarning($"[ID {id}] EffectAmount 변환 실패: '{word}'");
+                    effectHoldingTime[j] = -1;
+                }
+            }
+
+            // int[] effectHoldingTime = new int[effectHoldingTimeStr.Length];
+            // for (int j = 0; j < effectHoldingTime.Length; j++)
+            //     effectHoldingTime[j] = int.Parse(effectHoldingTimeStr[j]);
 
             // if (type == "attack") continue;
             // else if (type == "defence") continue;
@@ -44,11 +82,16 @@ public class AssetDataMaker : MonoBehaviour
             cardSpec.targeting = targeting;
             cardSpec.rarity = rarity;
             cardSpec.discardPolicy = discardPolicy;
+            cardSpec.effect = effect;
 
+            cardSpec.effectAmount = effectAmount;
+            cardSpec.effectHoldingTime = effectHoldingTime;
 
             string assetPath = $"Assets/CardAssets/Card_{id}.asset";
             AssetDatabase.CreateAsset(cardSpec, assetPath);
             Debug.Log($"CardSpec 생성: {assetPath}");
+            // todo : db 자동화 만들면 편할 것 같음
+
         }
 
         AssetDatabase.SaveAssets();
