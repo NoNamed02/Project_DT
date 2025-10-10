@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Cards/Effects/DealDamage")]
+[CreateAssetMenu(menuName = "Cards/Effects/DamageEffect")]
 public class DealDamageEffect : CardEffect
 {
     [SerializeField] private int damageAmount;
@@ -10,7 +10,7 @@ public class DealDamageEffect : CardEffect
         set => damageAmount = value;
     }
 
-    public override void Execute(Player source, Character target, Card card)
+    public override void Execute(Character target, Card card)
     {
         BattleManager.Instance.ApplyDamage(target, damageAmount);
     }

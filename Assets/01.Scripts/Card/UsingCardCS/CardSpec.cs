@@ -12,4 +12,7 @@ public class CardSpec : ScriptableObject
     public string[] targeting;
     public string rarity;
     public string discardPolicy;
+    public string[] effect;
+    public int[] effectAmount;
+    public int[] effectHoldingTime;
 }
