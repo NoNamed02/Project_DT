@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class Character : MonoBehaviour
 {
+    [SerializeField]
     protected int _hp = 10;
 
     public int HP

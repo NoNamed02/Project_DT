@@ -19,6 +19,7 @@ public class BattleManager : MonoSingleton<BattleManager>
         // 필요하면 여기서 방어력, 크리티컬 계산
         int finalDamage = damage;
         target.TakeDamage(finalDamage);
+        Debug.Log($"       {target}에게 {damage}만큼의 데미지를 줌");
     }
 
     public Character GetPlayer()
