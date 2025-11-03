@@ -58,12 +58,20 @@ public class CardManager : MonoBehaviour
     {
         Debug.Log($"target:{target} / card : {card.CardID}");
 
-        foreach (var cardeffect in card.cardEffects)
+        // foreach (var cardeffect in card.cardEffects)
+        // {
+        //     cardeffect.Execute(target, card);
+        //     // StartCoroutine 로 지연처리
+        // }
+
+        for (int i = 0; i < card.cardEffects.Count; i++)
         {
-            cardeffect.Execute(target, card);
+            card.cardEffects[i].Execute(target, card, card.CardSpec.effectAmount[i], card.CardSpec.effectHoldingTime[i]);
         }
 
         card.ActiveCard(); // 카드 사용 처리
         _graveyardDeck.SetCardToTop(card.CardID);
     }
+
+    //IEnumerator 로 처리
 }

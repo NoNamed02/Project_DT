@@ -11,5 +11,5 @@ public abstract class CardEffect : ScriptableObject
     /// <param name="source"></param>
     /// <param name="target"></param>
     /// <param name="card"></param>
-    public abstract void Execute(Character target, Card card);
+    public abstract void Execute(Character target, Card card, int effectAmount, int effectHoldingTime);
 }

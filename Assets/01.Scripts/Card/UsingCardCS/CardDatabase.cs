@@ -8,7 +8,10 @@ public class CardDatabase : MonoSingleton<CardDatabase>
     private CardSpec[] cardSpecs;
 
     [SerializeField]
-    private CardEffect[] cardDamageEffects;
+    private CardEffect DamageEffect;
+    
+    [SerializeField]
+    private CardEffect DefenceEffect;
     private Dictionary<int, CardSpec> _map;
 
     protected override void Awake()
@@ -48,12 +51,17 @@ public class CardDatabase : MonoSingleton<CardDatabase>
     /// <param name="amount"></param>
     /// <param name="holdingTime"></param>
     /// <returns></returns>
-    public CardEffect GetCardEffect(string effectName, int amount, int holdingTime)
+    public CardEffect GetCardEffect(string effectName)
     {
         if (effectName == "Damage")
         {
-            return cardDamageEffects[amount];
+            return DamageEffect;
         }
+        else if (effectName == "Defence")
+        {
+            return DefenceEffect;
+        }
+        Debug.Log("없는 개념에 대한 것을 가져오려함");
         return null;
     }
 }

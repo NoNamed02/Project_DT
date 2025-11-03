@@ -16,7 +16,8 @@ public class Card : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHand
 
     [SerializeField]
     private CardSpec _cardSpec;
-    public CardSpec CardSpec { get => _cardSpec; }
+    public CardSpec CardSpec => _cardSpec;
+
     [SerializeField]
     private List<CardEffect> _cardEffects = new List<CardEffect>();
     public List<CardEffect> cardEffects { get => _cardEffects; }
@@ -65,8 +66,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHand
         for (int i = 0; i < _cardSpec.effect.Length; i++)
         {
             Debug.Log(i + "번째 effect add");
-            _cardEffects.Add(CardDatabase.Instance.GetCardEffect(
-                _cardSpec.effect[i], _cardSpec.effectAmount[i], _cardSpec.effectHoldingTime[i]));
+            _cardEffects.Add(CardDatabase.Instance.GetCardEffect(_cardSpec.effect[i]));
         }
         // foreach (var effect in _cardEffects)
         // {
@@ -121,11 +121,27 @@ public class Card : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHand
         Ray ray = cam.ScreenPointToRay(eventData.position);
 
         RaycastHit2D hit = Physics2D.GetRayIntersection(ray, Mathf.Infinity);
-        if (hit.collider.gameObject.tag == "Enemy")
+
+        //Debug.Log($"_cardSpec.targeting[0] = {_cardSpec.targeting[0]}\nhit.collider.gameObject.tag = {hit.collider.gameObject.tag}\n_cardSpec.targeting[1] = {_cardSpec.targeting[1]}");
+        if (hit.collider != null)
         {
-            Debug.Log("Hit to enemy");
-            OnUsingCard.Invoke(this, hit.collider.gameObject.GetComponent<Character>());
-            //Destroy(gameObject); // todo : des는 어쩔 수 없다고 생각해도, 무덤으로 가는걸 여기서 처리하는게 나은가??
+            if (_cardSpec.targeting[0] == "enemy" && hit.collider.gameObject.tag == "Enemy")
+            {
+                if (_cardSpec.targeting[1] == "single")
+                {
+                    Debug.Log("Hit to enemy");
+                    OnUsingCard.Invoke(this, hit.collider.gameObject.GetComponent<Character>());
+                    //Destroy(gameObject); // todo : des는 어쩔 수 없다고 생각해도, 무덤으로 가는걸 여기서 처리하는게 나은가??
+                }
+                else if (_cardSpec.targeting[1] == "all")
+                {
+                    //다중 공격 구현
+                }
+            }
+        }
+        if (_cardSpec.targeting[0] == "player")
+        {
+            OnUsingCard.Invoke(this, GameObject.FindWithTag("Player").GetComponent<Character>());
         }
     }
 
