@@ -779,7 +779,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 684f1e5fa139140849a0e2ecc0367249, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cards: 01000000020000000300000001000000
+  _cards: 03000000020000000100000001000000
 --- !u!1 &496437080
 GameObject:
   m_ObjectHideFlags: 0
@@ -864,7 +864,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 1}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1402696050}
@@ -887,6 +887,7 @@ MonoBehaviour:
     _maxHP: 10
     _hp: 10
     _shield: 0
+  _identity: 0
   _states: []
   _currentState: {fileID: 0}
 --- !u!61 &496437084
@@ -2223,13 +2224,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4c9adb8f0e9915a41bb1646134311c36, type: 2}
   - {fileID: 11400000, guid: 7fb6311d3dc71b249907ed565d02fbe4, type: 2}
   - {fileID: 11400000, guid: 72f6c2aa543022e4582e3cae3cee8e3e, type: 2}
-  cardDamageEffects:
-  - {fileID: 11400000, guid: b6168b152a4974b10ac6fd5c797427b0, type: 2}
-  - {fileID: 11400000, guid: ad70da4b2d9a14e39a59f742d9bd0fe4, type: 2}
-  - {fileID: 11400000, guid: f7ead9973a04e4d37a9ced077d558d9c, type: 2}
-  - {fileID: 11400000, guid: 0bbf45e16d7394859802f37a0fc684b7, type: 2}
-  - {fileID: 11400000, guid: 1be5145b6ae3d484d9989662ccef8821, type: 2}
-  - {fileID: 11400000, guid: 186fe00667506422f924357e8b327d68, type: 2}
+  DamageEffect: {fileID: 11400000, guid: b6168b152a4974b10ac6fd5c797427b0, type: 2}
+  DefenceEffect: {fileID: 11400000, guid: 3c3a94ac01fd0a647a86b73a2f5d6fa0, type: 2}
 --- !u!1 &1897367704
 GameObject:
   m_ObjectHideFlags: 0
@@ -2388,6 +2384,7 @@ MonoBehaviour:
     _maxHP: 10
     _hp: 10
     _shield: 0
+  _identity: 0
   _drawDeck: {fileID: 229946983}
   _handDeck: {fileID: 1551731898}
   _graveyardDeck: {fileID: 1962736736}
