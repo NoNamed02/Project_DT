@@ -74,7 +74,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHand
         // }
         if (_cardEffects[0] == null)
         {
-            Debug.Log("뭔가 잘못되었다");
+            Debug.Log($"{CardID} : 뭔가 잘못되었다");
         }
     }
 
