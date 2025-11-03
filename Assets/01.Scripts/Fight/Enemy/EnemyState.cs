@@ -55,9 +55,22 @@ public class EnemyState : MonoBehaviour
 
     }
 
-    public int GetHP()
+    /// <summary>
+    /// 현재 체력 반환
+    /// </summary>
+    /// <returns></returns>
+    public int GetCurrentHP()
     {
-        return _enemy.HP;
+        return _enemy.Stats.CurrentHP;
+    }
+
+    /// <summary>
+    /// 최대 체력 반환
+    /// </summary>
+    /// <returns></returns>
+    public int GetMaxHP()
+    {
+        return _enemy.Stats.MaxHP;
     }
 
     /// <summary>

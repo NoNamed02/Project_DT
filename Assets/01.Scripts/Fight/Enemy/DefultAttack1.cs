@@ -10,16 +10,16 @@ public class DefultAttack1 : EnemyState
     public override void Enter()
     {
         base.Enter();
-        currentHP = GetHP();
+        currentHP = GetCurrentHP();
     }
     public override void Action()
     {
-        BattleManager.Instance.ApplyDamage(BattleManager.Instance.GetPlayer(), 5);
+        BattleManager.Instance.ApplyDamage(BattleManager.Instance.GetPlayer(), 2);
         base.Action();
     }
     public override void CheckStateChange()
     {
-        if (GetHP() <= currentHP - 5)
+        if (GetCurrentHP() <= currentHP - 5)
             RequestStateChange(IFNextStateIndex);
     }
     public override void Exit()

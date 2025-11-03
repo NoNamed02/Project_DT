@@ -22,6 +22,16 @@ public class BattleManager : MonoSingleton<BattleManager>
         Debug.Log($"       {target}에게 {damage}만큼의 데미지를 줌");
     }
 
+    public void ApplyShield(Character target, int shieldPoint)
+    {
+        target.ApplyShield(shieldPoint);
+    }
+    
+    public void ResetShield(Character target)
+    {
+        target.Stats.Shield = 0;
+    }
+
     public Character GetPlayer()
     {
         return _player;
