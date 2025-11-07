@@ -10,19 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f343cb99d2c61034cb6c660edbd246ac, type: 3}
-  m_Name: Card_0002
+  m_Name: Card_0007
   m_EditorClassIdentifier: 
-  id: 2
-  cardName: "\uBC29\uC5B4"
+  id: 7
+  cardName: "\uD68C\uD53C \uC790\uC138"
   cost: 1
   type: defence
-  instruction: "<b>3 \uBC29\uC5B4</b> \uC5BB\uC2B5\uB2C8\uB2E4."
+  instruction: "\uD68C\uD53C \uC790\uC138\uC5D0 \uC9C4\uC785\uD558\uC5EC \uD68C\uD53C
+    \uC2A4\uD0DD 5\uB97C \uC5BB\uC2B5\uB2C8\uB2E4."
   targeting:
   - player
   rarity: common
   discardPolicy: 
   effect:
-  - Defence
-  effectAmount: 03000000
+  - Effect
+  effectAmount: 05000000
   effectHoldingTime: 00000000
   cardImage: {fileID: 0}
