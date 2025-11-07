@@ -15,4 +15,5 @@ public class CardSpec : ScriptableObject
     public string[] effect;
     public int[] effectAmount;
     public int[] effectHoldingTime;
+    public Sprite cardImage;
 }

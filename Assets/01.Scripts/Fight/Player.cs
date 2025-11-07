@@ -11,6 +11,10 @@ public class Player : Character
     private Deck _graveyardDeck;
     public event System.Action<int> OnDrawCard;
 
+    protected override void Awake()
+    {
+        base.Awake();
+    }
     void Start()
     {
         if (TurnManager.Instance != null)
@@ -21,12 +25,7 @@ public class Player : Character
     {
         if (owner == TurnManager.TurnOwner.Player)
         {
-            Debug.Log("Player's Turn Start");
             DrawCard(1);
-        }
-        else
-        {
-            Debug.Log("Player's Turn End");
         }
     }
 

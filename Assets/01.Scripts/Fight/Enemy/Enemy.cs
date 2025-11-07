@@ -18,8 +18,9 @@ public class Enemy : Character
     // 콜백 묶음
     private Action<int> _requestChange;
     private Action _reportDone;
-    void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         _states = GetComponentsInChildren<EnemyState>(true).ToList();
         foreach (var state in _states)
         {
@@ -64,7 +65,6 @@ public class Enemy : Character
     {
         if (owner == TurnManager.TurnOwner.Enemy)
         {
-            Debug.Log("Enemy's Turn Start");
             if (_acting) return;
             else _acting = true;
 
