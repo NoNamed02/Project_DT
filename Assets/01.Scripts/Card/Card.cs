@@ -65,7 +65,6 @@ public class Card : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHand
 
         for (int i = 0; i < _cardSpec.effect.Length; i++)
         {
-            Debug.Log(i + "번째 effect add");
             _cardEffects.Add(CardDatabase.Instance.GetCardEffect(_cardSpec.effect[i]));
         }
         // foreach (var effect in _cardEffects)
@@ -147,6 +146,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHand
 
     public void ActiveCard()
     {
+        BattleManager.Instance.EffectBleeding(BattleManager.Instance.Player);
         Destroy(gameObject);
     }
 }

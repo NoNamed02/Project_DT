@@ -4,14 +4,18 @@ using UnityEngine;
 
 public class CardDatabase : MonoSingleton<CardDatabase>
 {
+    public enum EffectNum
+    {
+        Damage,
+        Defence,
+        Bleeding
+    }
     [SerializeField]
     private CardSpec[] cardSpecs;
 
     [SerializeField]
-    private CardEffect DamageEffect;
-    
-    [SerializeField]
-    private CardEffect DefenceEffect;
+    private List<CardEffect> Effects = new List<CardEffect>();
+
     private Dictionary<int, CardSpec> _map;
 
     protected override void Awake()
@@ -32,6 +36,10 @@ public class CardDatabase : MonoSingleton<CardDatabase>
             }
             _map[spec.id] = spec;
         }
+
+        Effects.Add(new DamageEffect());
+        Effects.Add(new DefenceEffect());
+        Effects.Add(new BleedingEffect());
     }
     // void Start()
     // {
@@ -55,11 +63,15 @@ public class CardDatabase : MonoSingleton<CardDatabase>
     {
         if (effectName == "Damage")
         {
-            return DamageEffect;
+            return Effects[(int)EffectNum.Damage];
         }
         else if (effectName == "Defence")
         {
-            return DefenceEffect;
+            return Effects[(int)EffectNum.Defence];
+        }
+        else if (effectName == "Bleeding")
+        {
+            return Effects[(int)EffectNum.Bleeding];
         }
         Debug.Log("없는 개념에 대한 것을 가져오려함");
         return null;
