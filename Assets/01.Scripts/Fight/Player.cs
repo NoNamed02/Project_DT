@@ -11,21 +11,26 @@ public class Player : Character
     private Deck _graveyardDeck;
     public event System.Action<int> OnDrawCard;
 
+    [SerializeField]
+    private int _drawCount = 5;
+
     protected override void Awake()
     {
         base.Awake();
+        _drawDeck.SuffleDeck();
     }
     void Start()
     {
         if (TurnManager.Instance != null)
             TurnManager.Instance.OnTurnChanged += TurnChanged;
+        DrawCard(_drawCount);
     }
 
     private void TurnChanged(TurnManager.TurnOwner owner)
     {
         if (owner == TurnManager.TurnOwner.Player)
         {
-            DrawCard(1);
+            DrawCard(_drawCount);
         }
     }
 
@@ -42,6 +47,12 @@ public class Player : Character
             else
             {
                 Debug.Log("draw deck is empty");
+                if (!_graveyardDeck.IsDeckEmpty())
+                {
+                    _graveyardDeck.MoveCardsToDeck(_drawDeck);
+                    if (!_drawDeck.IsDeckEmpty())
+                        DrawCard(1);
+                }
             }
         }
     }
