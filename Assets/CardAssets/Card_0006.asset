@@ -13,17 +13,19 @@ MonoBehaviour:
   m_Name: Card_0006
   m_EditorClassIdentifier: 
   id: 6
-  cardName: "\uC554\uC0B4 \uC790\uC138"
+  cardName: "\uB0A0\uCE74\uB85C\uC6B4 \uC77C\uACA9"
   cost: 2
-  type: effect
-  instruction: "\uB2E4\uC74C \uACF5\uACA9\uC758 \uD53C\uD574\uB7C9\uC744 1.5\uBC30\uB85C
-    \uB9CC\uB4ED\uB2C8\uB2E4."
+  type: attack
+  instruction: "\uB2E8\uAC80\uC73C\uB85C \uC0C1\uB300\uB97C \uCC14\uB7EC 5\uC758
+    \uB370\uBBF8\uC9C0\uB97C \uC90D\uB2C8\uB2E4."
   targeting:
-  - player
+  - enemy
+  - single
   rarity: common
   discardPolicy: 
   effect:
-  - AttackBuff
-  effectAmount: ffffffff
-  effectHoldingTime: 01000000
+  - Damage
+  effectAmount: 05000000
+  effectHoldingTime: 00000000
   cardImage: {fileID: 0}
+  cardCategoryBar: {fileID: 4340625043650993011, guid: bb21dc57e820fb642b188df2ac899118, type: 3}

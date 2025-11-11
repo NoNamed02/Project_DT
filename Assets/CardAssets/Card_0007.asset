@@ -27,3 +27,4 @@ MonoBehaviour:
   effectAmount: 05000000
   effectHoldingTime: 00000000
   cardImage: {fileID: 0}
+  cardCategoryBar: {fileID: -5948175412872903508, guid: 8f641d21f6108d3468a8d4d63086262b, type: 3}
