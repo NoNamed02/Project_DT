@@ -4,13 +4,24 @@ using UnityEngine;
 
 public class Deck : MonoBehaviour
 {
+    // public enum DeckCategory
+    // {
+    //     DrawDeck,
+    //     GraveyardDeck,
+    //     HandDeck
+    // }
+
     [Header("덱 리스트")]
     [SerializeField]
     private List<int> _cards = new List<int>();
 
+    // [Header("덱 카테고리")]
+    // [SerializeField]
+    // private DeckCategory _deckCategory = new DeckCategory();
+
     // 덱에서 덱으로 이동
     // ex - 드로우 덱 전부 사용시 무덤덱 -> 드로우 덱으로 리스트 이동
-    private void MoveCardsToDeck(Deck deck)
+    public void MoveCardsToDeck(Deck deck)
     {
         List<int> targetDeck = deck.GetCards();
         targetDeck.AddRange(_cards);
@@ -45,9 +56,15 @@ public class Deck : MonoBehaviour
     }
 
     // 덱 섞기 = 피셔 예이츠 제자리 셔플
-    private void SuffleDeck()
+    public void SuffleDeck()
     {
-        for (int i = _cards.Count - 1; i > 0; i++)
+        if (_cards == null || _cards.Count <= 1)
+        {
+            Debug.LogWarning("셔플할 카드가 없습니다.");
+            return;
+        }
+
+        for (int i = _cards.Count - 1; i > 0; i--)
         {
             int j = Random.Range(0, i + 1);
             (_cards[i], _cards[j]) = (_cards[j], _cards[i]);

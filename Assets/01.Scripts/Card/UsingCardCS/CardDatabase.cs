@@ -12,6 +12,7 @@ public class CardDatabase : MonoSingleton<CardDatabase>
     }
     [SerializeField]
     private CardSpec[] cardSpecs;
+    public CardSpec[] CardSpecs { set => value = cardSpecs; }
 
     [SerializeField]
     private List<CardEffect> Effects = new List<CardEffect>();

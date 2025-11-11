@@ -1,8 +1,8 @@
 using UnityEngine;
 using UnityEditor;
 using System.IO;
-using System.Text.RegularExpressions;
-using Unity.VisualScripting;
+using UnityEngine.UI;
+using System.Linq;
 
 public class AssetDataMaker : MonoBehaviour
 {
@@ -24,6 +24,12 @@ public class AssetDataMaker : MonoBehaviour
             //     Debug.Log(word);
             string id = parts[0].Trim('"');
             string name = parts[1].Trim('"');
+
+            if (name == "")
+            {
+                continue;
+            }
+
             string cost = parts[2].Trim('"');
             string type = parts[3].Trim('"');
             string instruction = parts[4].Trim('"');
@@ -87,11 +93,51 @@ public class AssetDataMaker : MonoBehaviour
             cardSpec.effectAmount = effectAmount;
             cardSpec.effectHoldingTime = effectHoldingTime;
 
+#if UNITY_EDITOR
+            Sprite sprite = AssetDatabase.LoadAssetAtPath<Sprite>($"Assets/PrivateAssets/CardSprite/{id}.png");
+            cardSpec.cardImage = sprite;
+
+            sprite = AssetDatabase.LoadAssetAtPath<Sprite>($"Assets/02.Sprites/card_category_{type}.png");
+            cardSpec.cardCategoryBar = sprite;
+#endif
+
+
             string assetPath = $"Assets/CardAssets/Card_{id}.asset";
             AssetDatabase.CreateAsset(cardSpec, assetPath);
             Debug.Log($"CardSpec 생성: {assetPath}");
             // todo : db 자동화 만들면 편할 것 같음
+        }
+        
+        // 모든 CardSpec 로드
+        var allSpecs = AssetDatabase.FindAssets("t:CardSpec")
+            .Select(guid => AssetDatabase.LoadAssetAtPath<CardSpec>(AssetDatabase.GUIDToAssetPath(guid)))
+            .ToArray();
 
+        // 씬의 CardDatabase 찾기
+        CardDatabase cardDB = Object.FindAnyObjectByType<CardDatabase>();
+
+        if (cardDB == null)
+        {
+            Debug.LogWarning("씬에 CardDatabase 오브젝트가 없습니다. 자동 연결 실패.");
+        }
+        else
+        {
+            // Undo 등록 (에디터 작업 취소 가능)
+            Undo.RecordObject(cardDB, "Auto Assign CardSpecs");
+
+            // 배열 갱신
+            var so = new SerializedObject(cardDB);
+            var specsProp = so.FindProperty("cardSpecs");
+            specsProp.ClearArray();
+            specsProp.arraySize = allSpecs.Length;
+            for (int i = 0; i < allSpecs.Length; i++)
+            {
+                specsProp.GetArrayElementAtIndex(i).objectReferenceValue = allSpecs[i];
+            }
+            so.ApplyModifiedProperties();
+
+            EditorUtility.SetDirty(cardDB);
+            Debug.Log($"CardDatabase에 {allSpecs.Length}개의 CardSpec 자동 연결 완료.");
         }
 
         AssetDatabase.SaveAssets();
