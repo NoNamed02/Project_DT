@@ -28,4 +28,5 @@ MonoBehaviour:
   - Damage
   effectAmount: 0200000002000000
   effectHoldingTime: 0000000000000000
-  cardImage: {fileID: 0}
+  cardImage: {fileID: 545875093725613961, guid: 0ba30a16e6a5bef44b628dc5fae37bdf, type: 3}
+  cardCategoryBar: {fileID: 4340625043650993011, guid: bb21dc57e820fb642b188df2ac899118, type: 3}

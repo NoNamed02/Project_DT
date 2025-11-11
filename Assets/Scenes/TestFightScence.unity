@@ -460,7 +460,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 684f1e5fa139140849a0e2ecc0367249, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cards: 0a0000000a0000000a0000000a000000
+  _cards: 02000000030000000a00000003000000
 --- !u!1 &496437080
 GameObject:
   m_ObjectHideFlags: 0
@@ -544,7 +544,7 @@ Transform:
   m_GameObject: {fileID: 496437080}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 1.45, z: 0}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1063,8 +1063,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 0, y: 210.66998}
-  m_SizeDelta: {x: 0, y: 381.34}
+  m_AnchoredPosition: {x: 0, y: 282.51}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1004940235
 MonoBehaviour:
@@ -1084,7 +1084,7 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 4
-  m_Spacing: 10
+  m_Spacing: 3
   m_ChildForceExpandWidth: 0
   m_ChildForceExpandHeight: 0
   m_ChildControlWidth: 0
@@ -1912,7 +1912,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5084859228464066472, guid: fdee60fb2186dbd49917da01fb80e099, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 272
+      value: 416
       objectReference: {fileID: 0}
     - target: {fileID: 5084859228464066472, guid: fdee60fb2186dbd49917da01fb80e099, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

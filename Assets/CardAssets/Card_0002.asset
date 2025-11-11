@@ -25,4 +25,5 @@ MonoBehaviour:
   - Defence
   effectAmount: 03000000
   effectHoldingTime: 00000000
-  cardImage: {fileID: 0}
+  cardImage: {fileID: 545875093725613961, guid: 306065b0d6229434f9a3468e350b3d1f, type: 3}
+  cardCategoryBar: {fileID: -5948175412872903508, guid: 8f641d21f6108d3468a8d4d63086262b, type: 3}
