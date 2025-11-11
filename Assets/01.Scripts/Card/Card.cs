@@ -1,10 +1,8 @@
 using System.Collections.Generic;
-using System.Linq;
 using TMPro;
-using TMPro.EditorUtilities;
 using UnityEngine;
-using UnityEngine.AI;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class Card : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler
 {
@@ -33,15 +31,9 @@ public class Card : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHand
     [SerializeField]
     private TextMeshProUGUI _nameText;
     [SerializeField]
-    private TextMeshProUGUI _idText;
-
-    void Awake()
-    {
-        _costText = transform.GetChild(0).GetComponent<TextMeshProUGUI>();
-        _instructionText = transform.GetChild(1).GetComponent<TextMeshProUGUI>();
-        _nameText = transform.GetChild(2).GetComponent<TextMeshProUGUI>();
-        _idText = transform.GetChild(3).GetComponent<TextMeshProUGUI>();
-    }
+    private Image _cardImage;
+    [SerializeField]
+    private Image _cardCategoryBar;
 
     /// <summary>
     /// 카드의 여러 값을 생성시 세팅
@@ -51,7 +43,6 @@ public class Card : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHand
     {
         _canvas = canvas;
         _cardID = id;
-        transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = _cardID.ToString();
 
         _cardSpec = CardDatabase.Instance.Get(_cardID);
         if (_cardSpec == null)
@@ -61,7 +52,9 @@ public class Card : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHand
         _costText.text = _cardSpec.cost.ToString();
         _instructionText.text = _cardSpec.instruction.ToString();
         _nameText.text = _cardSpec.cardName.ToString();
-        _idText.text = _cardSpec.id.ToString();
+        
+        _cardImage.sprite = _cardSpec.cardImage;
+        _cardCategoryBar.sprite = _cardSpec.cardCategoryBar;
 
         for (int i = 0; i < _cardSpec.effect.Length; i++)
         {

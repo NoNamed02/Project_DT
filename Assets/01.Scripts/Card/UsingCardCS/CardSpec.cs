@@ -16,4 +16,5 @@ public class CardSpec : ScriptableObject
     public int[] effectAmount;
     public int[] effectHoldingTime;
     public Sprite cardImage;
+    public Sprite cardCategoryBar;
 }
