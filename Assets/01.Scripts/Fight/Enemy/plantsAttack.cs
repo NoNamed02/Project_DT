@@ -1,12 +1,12 @@
 using UnityEngine;
 
-public class wolfAttack : EnemyState
+public class plantAttack : EnemyState
 {
     [SerializeField]
     private int currentHP = 100;
 
     [SerializeField]
-    private int DefenseStateIndex = 1;
+    private int HealStateIndex = 1;
 
     public override void Enter()
     {
@@ -16,17 +16,17 @@ public class wolfAttack : EnemyState
 
     public override void Action()
     {
-        // 공격 5
-        BattleManager.Instance.ApplyDamage(BattleManager.Instance.GetPlayer(), 5);
-        // 출혈, 10% 확률
-        // bleeding();
+        BattleManager.Instance.ApplyDamage(BattleManager.Instance.GetPlayer(), 3);
         base.Action();
     }
 
     public override void CheckStateChange()
     {
-        if (GetCurrentHP() <= currentHP - 5)
-            RequestStateChange(DefenseStateIndex);
+        // 체력이 깎였으면 회복 상태로 전환
+        if (GetCurrentHP() < currentHP)
+        {
+            RequestStateChange(HealStateIndex);
+        }
     }
 
     public override void Exit()
@@ -34,3 +34,4 @@ public class wolfAttack : EnemyState
         base.Exit();
     }
 }
+
