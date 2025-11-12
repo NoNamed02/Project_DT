@@ -2118,6 +2118,9 @@ MonoBehaviour:
   _drawDeck: {fileID: 229946983}
   _handDeck: {fileID: 1551731898}
   _graveyardDeck: {fileID: 1962736736}
+  _drawCount: 3
+  _costRecoveryValue: 3
+  _cost: 3
 --- !u!1 &1962736735
 GameObject:
   m_ObjectHideFlags: 0

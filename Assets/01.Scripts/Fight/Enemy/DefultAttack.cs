@@ -8,7 +8,7 @@ public class DefultAttack : EnemyState
     }
     public override void Action()
     {
-        BattleManager.Instance.ApplyDamage(BattleManager.Instance.GetPlayer(), 5);
+        BattleManager.Instance.ApplyDamage(BattleManager.Instance.Player, 5);
         base.Action();
     }
     public override void Exit()
