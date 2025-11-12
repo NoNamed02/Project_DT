@@ -17,7 +17,7 @@ public class wolfAttack : EnemyState
     public override void Action()
     {
         // °ø°İ 5
-        BattleManager.Instance.ApplyDamage(BattleManager.Instance.GetPlayer(), 5);
+        BattleManager.Instance.ApplyDamage(BattleManager.Instance.Player, 5);
         // ÃâÇ÷, 10% È®·ü
         // bleeding();
         base.Action();

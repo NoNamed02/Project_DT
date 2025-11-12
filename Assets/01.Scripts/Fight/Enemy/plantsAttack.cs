@@ -16,14 +16,14 @@ public class plantAttack : EnemyState
 
     public override void Action()
     {
-        BattleManager.Instance.ApplyDamage(BattleManager.Instance.GetPlayer(), 3);
+        BattleManager.Instance.ApplyDamage(BattleManager.Instance.Player, 3);
         base.Action();
     }
 
     public override void CheckStateChange()
     {
-        // 체력이 깎였으면 회복 상태로 전환
-        if (GetCurrentHP() < currentHP)
+        // 체력이 5 이상 깎였으면 회복 상태로 전환
+        if (GetCurrentHP() <= currentHP - 5)
         {
             RequestStateChange(HealStateIndex);
         }
