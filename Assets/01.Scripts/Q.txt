@@ -1,4 +1,0 @@
-CharacterHPBar
-이거를 character.cs에 엮어서 관리 하는게 나을까?
-그냥 update 박아넣기 vs 데미지 입을때마다 업데이트 하기
-
