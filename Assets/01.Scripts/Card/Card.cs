@@ -111,10 +111,18 @@ public class Card : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHand
         // shoot ray to camera space
         Camera cam = Camera.main;
         Ray ray = cam.ScreenPointToRay(eventData.position);
-
         RaycastHit2D hit = Physics2D.GetRayIntersection(ray, Mathf.Infinity);
 
-        //Debug.Log($"_cardSpec.targeting[0] = {_cardSpec.targeting[0]}\nhit.collider.gameObject.tag = {hit.collider.gameObject.tag}\n_cardSpec.targeting[1] = {_cardSpec.targeting[1]}");
+        if (!BattleManager.Instance.Player.CanUseCard(_cardSpec.cost))
+        {
+            Debug.Log("cost 부족");
+            return;
+        }
+        else
+        {
+            BattleManager.Instance.Player.Cost -= _cardSpec.cost;
+            Debug.Log($"플레이어 코스트 = {BattleManager.Instance.Player.Cost}");
+        }
         if (hit.collider != null)
         {
             if (_cardSpec.targeting[0] == "enemy" && hit.collider.gameObject.tag == "Enemy")
@@ -131,7 +139,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHand
                 }
             }
         }
-        if (_cardSpec.targeting[0] == "player")
+        else if (_cardSpec.targeting[0] == "player")
         {
             OnUsingCard.Invoke(this, GameObject.FindWithTag("Player").GetComponent<Character>());
         }

@@ -14,6 +14,13 @@ public class Player : Character
     [SerializeField]
     private int _drawCount = 5;
 
+    [SerializeField]
+    private int _costRecoveryValue = 3;
+
+    [SerializeField]
+    private int _cost = 3;
+    public int Cost { get => _cost; set => _cost = value; }
+
     protected override void Awake()
     {
         base.Awake();
@@ -31,6 +38,7 @@ public class Player : Character
         if (owner == TurnManager.TurnOwner.Player)
         {
             DrawCard(_drawCount);
+            _cost = _costRecoveryValue;
         }
     }
 
@@ -55,5 +63,10 @@ public class Player : Character
                 }
             }
         }
+    }
+
+    public bool CanUseCard(int cardCost)
+    {
+        return _cost >= cardCost;
     }
 }
