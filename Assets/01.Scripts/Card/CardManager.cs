@@ -56,7 +56,7 @@ public class CardManager : MonoBehaviour
     /// <param name="cardID"></param>
     public void UsingCard(Card card, Character target)
     {
-        Debug.Log($"target:{target} / card : {card.CardID}");
+        //Debug.Log($"target:{target} / card : {card.CardID}");
 
         // foreach (var cardeffect in card.cardEffects)
         // {

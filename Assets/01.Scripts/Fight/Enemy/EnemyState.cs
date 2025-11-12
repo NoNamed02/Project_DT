@@ -5,6 +5,7 @@ using UnityEngine;
 public class EnemyState : MonoBehaviour
 {
     private Enemy _enemy;
+    public Enemy Enemy { get => _enemy; }
 
     [SerializeField]
     protected int _nextStateIndex = 0;

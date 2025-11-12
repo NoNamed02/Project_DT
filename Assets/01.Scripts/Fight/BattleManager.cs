@@ -5,9 +5,9 @@ using System.Linq;
 public class BattleManager : MonoSingleton<BattleManager>
 {
     [SerializeField]
-    private Character _player;
+    private Player _player;
 
-    public Character Player => _player;
+    public Player Player => _player;
     [SerializeField]
     private List<Enemy> _enemys = new List<Enemy>();
     void Start()
@@ -77,10 +77,6 @@ public class BattleManager : MonoSingleton<BattleManager>
         target.EffectBleeding();
     }
 
-    public Character GetPlayer()
-    {
-        return _player;
-    }
     public List<Enemy> GetEnemys()
     {
         return _enemys;
