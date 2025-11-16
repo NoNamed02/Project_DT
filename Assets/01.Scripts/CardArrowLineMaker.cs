@@ -28,6 +28,9 @@ public class CardArrowLineMaker : MonoSingleton<CardArrowLineMaker>
     {
         _arrowLine = GetComponent<LineRenderer>();
         _positionsBuffer = new Vector3[128]; // max point
+
+        _arrowLine.sortingLayerName = "Default"; // 혹은 별도의 Layer
+        _arrowLine.sortingOrder = 100; // 큰 숫자일수록 앞
     }
     void Update()
     {
