@@ -63,6 +63,7 @@ public class Player : Character
                 }
             }
         }
+        // HandArea.Instance.SortCards();
     }
 
     public bool CanUseCard(int cardCost)

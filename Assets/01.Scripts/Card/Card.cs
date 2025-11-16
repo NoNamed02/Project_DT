@@ -1,11 +1,14 @@
 using System.Collections.Generic;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Rendering;
 using UnityEngine.UI;
 
-public class Card : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler
+public class Card : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler, IPointerEnterHandler, IPointerExitHandler
 {
+    // todo 나중에 따로 cs파서 text같은거 정리, 너무 난잡하다
     private int _cardID = -1; // 초기값, -1인 상태로 사용되면 예외처리 핸들링
     [Header("Card ID")]
     public int CardID { get => _cardID; set => _cardID = value; }
@@ -34,15 +37,21 @@ public class Card : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHand
     private Image _cardImage;
     [SerializeField]
     private Image _cardCategoryBar;
+    private CardAnimator _cardAnimator;
+    private bool _isDragging = false;
+    public bool IsDragging => _isDragging;
+    private bool _isSorted = false;
+    public bool IsSorted { get => _isSorted; set => _isSorted = value; }
 
     /// <summary>
     /// 카드의 여러 값을 생성시 세팅
     /// </summary>
     /// <param name="id"></param>
-    public void Init(Canvas canvas, int id)
+    public void Init(Canvas canvas, int id, CardAnimator cardAnimator)
     {
         _canvas = canvas;
         _cardID = id;
+        _cardAnimator = cardAnimator;
 
         _cardSpec = CardDatabase.Instance.Get(_cardID);
         if (_cardSpec == null)
@@ -52,7 +61,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHand
         _costText.text = _cardSpec.cost.ToString();
         _instructionText.text = _cardSpec.instruction.ToString();
         _nameText.text = _cardSpec.cardName.ToString();
-        
+
         _cardImage.sprite = _cardSpec.cardImage;
         _cardCategoryBar.sprite = _cardSpec.cardCategoryBar;
 
@@ -73,8 +82,9 @@ public class Card : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHand
     // 드래그 시작 처리
     public void OnBeginDrag(PointerEventData eventData)
     {
-        //Debug.Log("OnBeginDrag");
-
+        if (!_isSorted)
+            return;
+        _isDragging = true;
         CardArrowLineMaker.Instance.ActiveLineDrawer(true);
         CardArrowLineMaker.Instance.SetIsDragging(true);
 
@@ -84,14 +94,13 @@ public class Card : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHand
         Vector3 start = cam.ScreenToWorldPoint(sp);
         start.z = 0f;
         CardArrowLineMaker.Instance.SetStartPoint(start);
-
     }
 
     // 드래그 중 처리
     public void OnDrag(PointerEventData eventData)
     {
-        //Debug.Log("OnDrag");
-
+        if (!_isSorted)
+            return;
         var cam = Camera.main;
         float depth = 0f - cam.transform.position.z; // 목표 z=0
         Vector3 sp = new Vector3(eventData.position.x, eventData.position.y, depth);
@@ -103,9 +112,11 @@ public class Card : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHand
     // 드래그 종료 처리
     public void OnEndDrag(PointerEventData eventData)
     {
+        if (!_isSorted)
+            return;
+        _isDragging = false;
         //Debug.Log("OnEndDrag");
         CardArrowLineMaker.Instance.SetIsDragging(false);
-
         CardArrowLineMaker.Instance.ActiveLineDrawer(false);
 
         // shoot ray to camera space
@@ -118,12 +129,11 @@ public class Card : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHand
             Debug.Log("cost 부족");
             return;
         }
-        else
+        else if (_cardSpec.targeting[0] == "player")
         {
-            BattleManager.Instance.Player.Cost -= _cardSpec.cost;
-            Debug.Log($"플레이어 코스트 = {BattleManager.Instance.Player.Cost}");
+            OnUsingCard.Invoke(this, GameObject.FindWithTag("Player").GetComponent<Character>());
         }
-        if (hit.collider != null)
+        else if (hit.collider != null)
         {
             if (_cardSpec.targeting[0] == "enemy" && hit.collider.gameObject.tag == "Enemy")
             {
@@ -131,23 +141,42 @@ public class Card : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHand
                 {
                     Debug.Log("Hit to enemy");
                     OnUsingCard.Invoke(this, hit.collider.gameObject.GetComponent<Character>());
+                    BattleManager.Instance.Player.Cost -= _cardSpec.cost;
+                    Debug.Log($"플레이어 코스트 = {BattleManager.Instance.Player.Cost}");
                     //Destroy(gameObject); // todo : des는 어쩔 수 없다고 생각해도, 무덤으로 가는걸 여기서 처리하는게 나은가??
                 }
                 else if (_cardSpec.targeting[1] == "all")
                 {
+                    BattleManager.Instance.Player.Cost -= _cardSpec.cost;
+                    Debug.Log($"플레이어 코스트 = {BattleManager.Instance.Player.Cost}");
                     //다중 공격 구현
                 }
             }
         }
-        else if (_cardSpec.targeting[0] == "player")
+        else
         {
-            OnUsingCard.Invoke(this, GameObject.FindWithTag("Player").GetComponent<Character>());
+            _cardAnimator.ExitHighlight(this);
         }
+    }
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (!_isSorted)
+            return;
+        _cardAnimator.EnterHighlight(this);
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        if (!_isSorted)
+            return;
+        _cardAnimator.ExitHighlight(this);
     }
 
     public void ActiveCard()
     {
-        BattleManager.Instance.EffectBleeding(BattleManager.Instance.Player);
-        Destroy(gameObject);
+        _cardAnimator.Kill(this);
+        gameObject.SetActive(false);   // 즉시 정렬 대상에서 제거됨
+        HandArea.Instance.SortCards();
+        Destroy(gameObject, 0.01f);    // 뒤 프레임에서 삭제
     }
 }

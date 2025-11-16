@@ -1,13 +1,10 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.XR;
 
 public class CardManager : MonoBehaviour
 {
-    [Header("card area")]
-    [SerializeField]
-    private Transform _handArea;
-
     [Header("card prefab")]
     [SerializeField]
     private GameObject _card;
@@ -32,6 +29,9 @@ public class CardManager : MonoBehaviour
     [SerializeField]
     private Canvas _canvas;          // 최상위 Canvas
 
+    [SerializeField]
+    private CardAnimator _cardAnimator;
+
     void Start()
     {
         _player.OnDrawCard += InstanceCard;
@@ -43,10 +43,10 @@ public class CardManager : MonoBehaviour
     /// <param name="cardID"></param>
     public void InstanceCard(int cardID)
     {
-        GameObject card = Instantiate(_card, _handArea);
-        card.GetComponent<Card>().Init(_canvas, cardID);
-
+        GameObject card = Instantiate(_card, HandArea.Instance.GetComponent<RectTransform>());
+        card.GetComponent<Card>().Init(_canvas, cardID, _cardAnimator);
         card.GetComponent<Card>().OnUsingCard += UsingCard;
+        _cardAnimator.DrawCard(card.GetComponent<Card>());
     }
 
     /// <summary>
