@@ -99,5 +99,7 @@ InitTestScene*.unity*
 /[Aa]ssets/[Ii]nit[Tt]est[Ss]cene*.unity*
 /[Aa]ssets/09.Fonts
 Assets/PrivateAssets/
-
+Assets/Plugins
+Assets/Wingman
+Assets/DOTweenSettings
 Packages/com.singularitygroup.hotreload
