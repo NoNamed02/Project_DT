@@ -1,13 +1,9 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Character : MonoBehaviour
 {
-    public enum StatusAbnormalityNumber
-    {
-        bleeding
-    }
-
     [SerializeField]
     private Stats _stats;
 
@@ -22,10 +18,15 @@ public class Character : MonoBehaviour
     [Header("상태이상 리스트")]
     [SerializeField]
     private List<StatusAbnormality> _statusAbnormalitys = new List<StatusAbnormality>();
+    public List<StatusAbnormality> StatusAbnormalitys => _statusAbnormalitys;
 
     [Header("상태 표시줄")]
     [SerializeField]
     private StatusBar _statusBar;
+
+    [Header("(회피 상태 / 확인용)")]
+    [SerializeField]
+    private bool _dodge = false;
 
     protected virtual void Awake()
     {
@@ -33,15 +34,15 @@ public class Character : MonoBehaviour
 
         if (_statusAbnormalitys == null)
             _statusAbnormalitys = new List<StatusAbnormality>();
-
-        InitStatusAbnormality();
-    }
-    private void InitStatusAbnormality()
-    {
-        _statusAbnormalitys.Add(new StatusAbnormality("출혈", 0, 0));
     }
     public void TakeDamage(int damage)
     {
+        if (_dodge)
+        {
+            _dodge = false;
+            Debug.Log("회피함");
+            return;
+        }
         if (_stats.Shield >= damage)
         {
             _stats.Shield -= damage;
@@ -77,42 +78,75 @@ public class Character : MonoBehaviour
             _stats.CurrentHP = _stats.MaxHP;
         }
     }
-    public void ApplyBleeding(int amount, int HoldingTime)
+    public void ApplyEffect(StatusAbnormalityNumber effectID, int amount, int holdingTime)
     {
-        if (_statusAbnormalitys[(int)StatusAbnormalityNumber.bleeding].Amount > 0)
+        var effect = new StatusAbnormality(effectID, amount, holdingTime);
+        _statusAbnormalitys.Add(effect);
+        if (effectID == StatusAbnormalityNumber.dodge)
         {
-            _statusAbnormalitys[(int)StatusAbnormalityNumber.bleeding].Amount = (_statusAbnormalitys[(int)StatusAbnormalityNumber.bleeding].Amount + amount) / 2;
+            if (CheckDodge())
+            {
+                EffectDodge();
+            }
         }
-        else
+    }
+    private bool CheckDodge()
+    {
+        int amount = 0;
+        foreach (var effect in _statusAbnormalitys)
         {
-            _statusAbnormalitys[(int)StatusAbnormalityNumber.bleeding].Amount += amount;
+            if (effect.EffectID == StatusAbnormalityNumber.dodge)
+                amount += effect.Amount;
         }
-        _statusAbnormalitys[(int)StatusAbnormalityNumber.bleeding].HoldingTime += HoldingTime;
+        return amount >= 10;
+    }
+    private void EffectDodge()
+    {
+        Debug.Log("회피 상태");
+        for (int i = _statusAbnormalitys.Count - 1; i >= 0; i--)
+        {
+            if (_statusAbnormalitys[i].EffectID == StatusAbnormalityNumber.dodge)
+            {
+                _statusAbnormalitys.RemoveAt(i);
+            }
+        }
+
+        _dodge = true;
     }
 
     public void EffectBleeding()
     {
-        var bleed = _statusAbnormalitys[(int)StatusAbnormalityNumber.bleeding];
-
-        // 출혈이 없으면 바로 종료
-        if (bleed.Amount <= 0 || bleed.HoldingTime <= 0)
-            return;
-
-        // 피해 적용
-        _stats.CurrentHP -= bleed.Amount;
-        bleed.HoldingTime--;
-
-        // 지속이 끝났으면 상태 초기화
-        if (bleed.HoldingTime <= 0)
+        int bleedingAmount = 0;
+        for (int i = _statusAbnormalitys.Count - 1; i >= 0; i--)
         {
-            bleed.Amount = 0;
-            bleed.HoldingTime = 0;
-            // TODO: 효과 GUI 끄기
-        }
+            if (_statusAbnormalitys[i].EffectID == StatusAbnormalityNumber.bleeding)
+            {
+                var effect = _statusAbnormalitys[i];
 
-        _statusAbnormalitys[(int)StatusAbnormalityNumber.bleeding] = bleed;
+                bleedingAmount += effect.Amount;
+                effect.HoldingTime--;
+
+                if (effect.HoldingTime <= 0)
+                {
+                    _statusAbnormalitys.RemoveAt(i);
+                    continue;
+                }
+
+                _statusAbnormalitys[i] = effect;
+            }
+        }
+        _stats.CurrentHP -= bleedingAmount;
+
+        if (CheckDie())
+        {
+            Die();
+        }
     }
 
+    private bool CheckDie()
+    {
+        return _stats.CurrentHP <= 0;
+    }
     private void Die()
     {
         Debug.Log($"{name} is dead");

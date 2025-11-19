@@ -8,7 +8,8 @@ public class CardDatabase : MonoSingleton<CardDatabase>
     {
         Damage,
         Defence,
-        Bleeding
+        Bleeding,
+        Dodge
     }
     [SerializeField]
     private CardSpec[] cardSpecs;
@@ -41,6 +42,7 @@ public class CardDatabase : MonoSingleton<CardDatabase>
         Effects.Add(new DamageEffect());
         Effects.Add(new DefenceEffect());
         Effects.Add(new BleedingEffect());
+        Effects.Add(new DodgeEffect());
     }
     // void Start()
     // {
@@ -50,6 +52,7 @@ public class CardDatabase : MonoSingleton<CardDatabase>
     //         _map[spec.id] = spec;
     //     }
     // }
+
 
     public CardSpec Get(int id) => _map.TryGetValue(id, out var spec) ? spec : null;
 
@@ -73,6 +76,10 @@ public class CardDatabase : MonoSingleton<CardDatabase>
         else if (effectName == "Bleeding")
         {
             return Effects[(int)EffectNum.Bleeding];
+        }
+        else if (effectName == "Dodge")
+        {
+            return Effects[(int)EffectNum.Dodge];
         }
         Debug.Log("없는 개념에 대한 것을 가져오려함");
         return null;
