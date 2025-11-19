@@ -225,6 +225,7 @@ GameObject:
   - component: {fileID: 293041780863740578}
   - component: {fileID: 5165027243106625251}
   - component: {fileID: 4193290828027159437}
+  - component: {fileID: 6447091607275250225}
   m_Layer: 8
   m_Name: Card
   m_TagString: Untagged
@@ -304,12 +305,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d869d72f45264f0cb1d89567a752a85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _cardUI:
+    CardCategoryBar: {fileID: 5732066204708920155}
+    CostText: {fileID: 6231362772405403618}
+    InstructionText: {fileID: 4633498124156441057}
+    NameText: {fileID: 2600614688179113311}
+    CardImage: {fileID: 1738809356970830700}
+  CardID: -1
   _cardSpec: {fileID: 0}
-  _costText: {fileID: 6231362772405403618}
-  _instructionText: {fileID: 4633498124156441057}
-  _nameText: {fileID: 2600614688179113311}
-  _cardImage: {fileID: 1738809356970830700}
-  _cardCategoryBar: {fileID: 5732066204708920155}
 --- !u!114 &5165027243106625251
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -376,6 +379,18 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!225 &6447091607275250225
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5173240273423711775}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &5806701142957183523
 GameObject:
   m_ObjectHideFlags: 0

@@ -16,15 +16,15 @@ MonoBehaviour:
   cardName: "\uD68C\uD53C \uC790\uC138"
   cost: 1
   type: defence
-  instruction: "\uD68C\uD53C \uC790\uC138\uC5D0 \uC9C4\uC785\uD558\uC5EC \uD68C\uD53C
-    \uC2A4\uD0DD 5\uB97C \uC5BB\uC2B5\uB2C8\uB2E4."
+  instruction: "\uD68C\uD53C \uC790\uC138\uB97C \uCDE8\uD558\uC5EC \uD68C\uD53C \uC2A4\uD0DD
+    5\uB97C \uC5BB\uC2B5\uB2C8\uB2E4."
   targeting:
   - player
   rarity: common
   discardPolicy: 
   effect:
-  - Effect
+  - Dodge
   effectAmount: 05000000
   effectHoldingTime: 00000000
-  cardImage: {fileID: 0}
+  cardImage: {fileID: -7866962194647477418, guid: 8c6b164966c880b47a49f0934f4ecaad, type: 3}
   cardCategoryBar: {fileID: -5948175412872903508, guid: 8f641d21f6108d3468a8d4d63086262b, type: 3}
