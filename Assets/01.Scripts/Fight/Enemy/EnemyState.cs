@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Runtime.ExceptionServices;
 using UnityEngine;
 
 public class EnemyState : MonoBehaviour
@@ -9,6 +10,9 @@ public class EnemyState : MonoBehaviour
 
     [SerializeField]
     protected int _nextStateIndex = 0;
+
+    [SerializeField]
+    private int _actionCount = 1;
 
     protected Action<int> RequestChange;   // 전이 요청
     protected Action ReportDone;           // 액션 종료 보고
@@ -37,6 +41,8 @@ public class EnemyState : MonoBehaviour
     public virtual void Action()
     {
         ReportDone?.Invoke();
+        for (int i = 0; i < _actionCount; i++)
+            _enemy.EffectBleeding(); // 임시임
         RequestStateChange(_nextStateIndex);
     }
 
