@@ -1,3 +1,5 @@
+using DG.Tweening;
+using NUnit.Framework.Constraints;
 using UnityEngine;
 
 public class Player : Character
@@ -39,6 +41,13 @@ public class Player : Character
         {
             DrawCard(_drawCount);
             _cost = _costRecoveryValue;
+        }
+        else if (owner == TurnManager.TurnOwner.Enemy)
+        {
+            DOVirtual.DelayedCall(0.1f, () =>  // 0.1초 지연
+            {
+                HandArea.Instance.ThrowAwayHand();
+            });
         }
     }
 

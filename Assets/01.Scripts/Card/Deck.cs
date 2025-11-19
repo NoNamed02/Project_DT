@@ -101,4 +101,9 @@ public class Deck : MonoBehaviour
     {
         _cards.Add(cardId);
     }
+
+    public void DeleteCard(int cardId)
+    {
+        _cards.Remove(cardId);
+    }
 }
