@@ -14,6 +14,7 @@ public class Deck : MonoBehaviour
     [Header("덱 리스트")]
     [SerializeField]
     private List<int> _cards = new List<int>();
+    public List<int> Cards { get => _cards; set => _cards = value; }
 
     // [Header("덱 카테고리")]
     // [SerializeField]
@@ -23,7 +24,7 @@ public class Deck : MonoBehaviour
     // ex - 드로우 덱 전부 사용시 무덤덱 -> 드로우 덱으로 리스트 이동
     public void MoveCardsToDeck(Deck deck)
     {
-        List<int> targetDeck = deck.GetCards();
+        List<int> targetDeck = deck.Cards;
         targetDeck.AddRange(_cards);
 
         ResetDeck();
@@ -76,18 +77,6 @@ public class Deck : MonoBehaviour
     public int RandomDrawCard()
     {
         return 0;
-    }
-
-    // 자신의 덱을 반환
-    public List<int> GetCards()
-    {
-        return _cards;
-    }
-
-    // 덱 세팅
-    public void SetDeck(List<int> cardIdData)
-    {
-        _cards = cardIdData;
     }
 
     // 자신의 덱을 비움

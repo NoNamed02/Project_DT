@@ -27,6 +27,7 @@ public class Player : Character
     {
         base.Awake();
         _drawDeck.SuffleDeck();
+        HPForSet = RunTimeData.Instance.HP;
     }
     void Start()
     {
