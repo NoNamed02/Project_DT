@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using Unity.VisualScripting;
+using DarkTonic.MasterAudio;
 
 public class BattleManager : MonoSingleton<BattleManager>
 {
@@ -21,7 +22,13 @@ public class BattleManager : MonoSingleton<BattleManager>
         AddCameraEvent(CameraController.CameraMove);
     }
 
-
+    void Update()
+    {
+        if (_enemys.Count == 0)
+        {
+            Debug.Log("전투 끝");
+        }
+    }
     public void AddCameraEvent(ActionTest test)
     {
         OnApplyDamage += test;
@@ -39,6 +46,8 @@ public class BattleManager : MonoSingleton<BattleManager>
         target.TakeDamage(finalDamage);
         Debug.Log($"------{target}에게 {damage}만큼의 데미지를 줌");
         OnApplyDamage?.Invoke();
+        MasterAudio.PlaySound("blade_whoosh");
+        VFXManager.Instance.SpawnVFX(target.gameObject, VFXManager.VFXList.Hit);
     }
 
     /// <summary>
@@ -49,6 +58,8 @@ public class BattleManager : MonoSingleton<BattleManager>
     public void ApplyShield(Character target, int shieldPoint)
     {
         target.ApplyShield(shieldPoint);
+        MasterAudio.PlaySound("shield_metal_deflect");
+        
     }
 
     /// <summary>

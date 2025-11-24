@@ -1,3 +1,4 @@
+using DarkTonic.MasterAudio;
 using UnityEngine;
 
 public sealed class TurnManager : MonoSingleton<TurnManager>
@@ -30,6 +31,7 @@ public sealed class TurnManager : MonoSingleton<TurnManager>
 
         _battleStarted = true;
         _currentTurn = 1;
+        MasterAudio.PlaySound("fnt_ui_use_metal");
         OnTurnChanged?.Invoke(_turnOwner);
     }
 
