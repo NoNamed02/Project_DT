@@ -31,8 +31,6 @@ public class CardManager : MonoBehaviour
     [SerializeField]
     private Card _selectCard;
 
-    [SerializeField]
-    private Canvas _canvas;          // 최상위 Canvas
 
     [SerializeField]
     private CardAnimator _cardAnimator;
@@ -49,7 +47,7 @@ public class CardManager : MonoBehaviour
     public void InstanceCard(int cardID)
     {
         GameObject card = Instantiate(_card, HandArea.Instance.GetComponent<RectTransform>());
-        card.GetComponent<Card>().Init(_canvas, cardID, _cardAnimator);
+        card.GetComponent<Card>().Init(cardID, _cardAnimator);
         card.GetComponent<Card>().OnUsingCard += UsingCard;
         card.GetComponent<Card>().OnDiscardCard += DiscardCard;
         _cardAnimator.DrawCard(card.GetComponent<Card>());
