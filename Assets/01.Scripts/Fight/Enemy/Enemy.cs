@@ -52,6 +52,10 @@ public class Enemy : Character
             _currentState.CheckStateChange();
         }
     }
+    public void RunStateCoroutine(IEnumerator routine)
+    {
+        StartCoroutine(routine);
+    }
 
     void OnDestroy()
     {
