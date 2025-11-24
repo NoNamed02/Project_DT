@@ -16,8 +16,8 @@ MonoBehaviour:
   cardName: "\uD68C\uD53C \uC790\uC138"
   cost: 1
   type: defence
-  instruction: "\uD68C\uD53C \uC790\uC138\uB97C \uCDE8\uD558\uC5EC \uD68C\uD53C \uC2A4\uD0DD
-    5\uB97C \uC5BB\uC2B5\uB2C8\uB2E4."
+  instruction: "\uD68C\uD53C \uC790\uC138\uB97C \uCDE8\uD558\uC5EC <b>\uD68C\uD53C
+    \uC2A4\uD0DD 5</b>\uB97C \uC5BB\uC2B5\uB2C8\uB2E4."
   targeting:
   - player
   rarity: common

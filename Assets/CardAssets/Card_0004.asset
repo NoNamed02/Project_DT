@@ -16,8 +16,8 @@ MonoBehaviour:
   cardName: "\uB9F9\uB3C5 \uB2E8\uAC80"
   cost: 1
   type: attack
-  instruction: "\uB3C5 \uBB3B\uC740 \uB2E8\uAC80\uC73C\uB85C 4 \uB370\uBBF8\uC9C0\uC640
-    \uB3C5 2\uB97C \uBD80\uC5EC\uD569\uB2C8\uB2E4."
+  instruction: "\uB3C5 \uBB3B\uC740 \uB2E8\uAC80\uC73C\uB85C <b>4 \uB370\uBBF8\uC9C0\uC640
+    \uB3C5 2</b>\uB97C \uBD80\uC5EC\uD569\uB2C8\uB2E4."
   targeting:
   - enemy
   - single
@@ -28,5 +28,5 @@ MonoBehaviour:
   - Poison
   effectAmount: 0400000002000000
   effectHoldingTime: 0000000003000000
-  cardImage: {fileID: 0}
+  cardImage: {fileID: -1792632809057475342, guid: 0da5d78d22c61d7418490495a3938ccf, type: 3}
   cardCategoryBar: {fileID: 4340625043650993011, guid: bb21dc57e820fb642b188df2ac899118, type: 3}

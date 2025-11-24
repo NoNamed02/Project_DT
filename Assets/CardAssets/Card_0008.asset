@@ -14,18 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 8
   cardName: "\uC5F0\uB9C9\uD0C4"
-  cost: 2
+  cost: 3
   type: defence
-  instruction: "\uC5F0\uB9C9\uC744 \uB358\uC838 5 \uBC29\uC5B4\uB97C \uC5BB\uACE0
-    \uD68C\uD53C \uC2A4\uD0DD\uC744 5 \uC5BB\uC2B5\uB2C8\uB2E4."
+  instruction: "\uC5F0\uB9C9\uC744 \uB358\uC838 <b>\uD68C\uD53C \uC2A4\uD0DD\uC744
+    10</b> \uC5BB\uC2B5\uB2C8\uB2E4."
   targeting:
   - player
   rarity: common
   discardPolicy: 
   effect:
-  - Defence
-  - Stealth
-  effectAmount: 0500000001000000
-  effectHoldingTime: 0000000002000000
-  cardImage: {fileID: 0}
+  - Dodge
+  effectAmount: 0a000000
+  effectHoldingTime: 00000000
+  cardImage: {fileID: 8652625658316714873, guid: e262a74ba8ab16349a6fb0643f60137b, type: 3}
   cardCategoryBar: {fileID: -5948175412872903508, guid: 8f641d21f6108d3468a8d4d63086262b, type: 3}

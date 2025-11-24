@@ -16,8 +16,8 @@ MonoBehaviour:
   cardName: "\uBD89\uC740 \uC5F0\uBB34"
   cost: 2
   type: attack
-  instruction: "\uC801\uC5D0\uAC8C 2 \uB370\uBBF8\uC9C0\uB97C \uC8FC\uACE0 \uCD9C\uD608
-    3/2\uC744 \uBD80\uC5EC\uD569\uB2C8\uB2E4."
+  instruction: "\uC801\uC5D0\uAC8C <b>2 \uB370\uBBF8\uC9C0</b>\uB97C \uC8FC\uACE0
+    \uCD9C\uD608 3/2\uC744 \uBD80\uC5EC\uD569\uB2C8\uB2E4."
   targeting:
   - enemy
   - single
