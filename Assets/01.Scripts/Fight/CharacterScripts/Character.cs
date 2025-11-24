@@ -14,6 +14,10 @@ public class Character : MonoBehaviour
     {
         get => _stats;
     }
+    protected int HPForSet
+    {
+        set => _stats.CurrentHP = value;
+    }
 
     [Header("상태이상 리스트")]
     [SerializeField]
@@ -50,6 +54,7 @@ public class Character : MonoBehaviour
         else
         {
             damage -= _stats.Shield;
+            _stats.Shield = 0;
             _stats.CurrentHP -= damage;
         }
 
