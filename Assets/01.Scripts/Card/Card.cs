@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using DarkTonic.MasterAudio;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
@@ -11,7 +12,6 @@ public class Card : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHand
     [SerializeField]
     private CardUI _cardUI;
     public int CardID = -1;
-    private Canvas _canvas;
     [SerializeField]
     private CardSpec _cardSpec;
     public CardSpec CardSpec => _cardSpec;
@@ -35,9 +35,8 @@ public class Card : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHand
     /// 카드의 여러 값을 생성시 세팅
     /// </summary>
     /// <param name="id"></param>
-    public void Init(Canvas canvas, int id, CardAnimator cardAnimator)
+    public void Init(int id, CardAnimator cardAnimator)
     {
-        _canvas = canvas;
         CardID = id;
         _cardAnimator = cardAnimator;
 
@@ -151,6 +150,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHand
         if (!_isSorted)
             return;
         _cardAnimator.EnterHighlight(this);
+        MasterAudio.PlaySound("CardSound");
     }
 
     public void OnPointerExit(PointerEventData eventData)
