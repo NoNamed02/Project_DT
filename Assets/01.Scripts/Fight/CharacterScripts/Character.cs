@@ -155,6 +155,14 @@ public class Character : MonoBehaviour
     private void Die()
     {
         Debug.Log($"{name} is dead");
+        if (this is Enemy)
+        {
+            BattleManager.Instance.GetEnemys().Remove(this as Enemy);
+        }
+        gameObject.SetActive(false);
+        _statusBar.gameObject.SetActive(false);
+        // Destroy(_statusBar);
+        // Destroy(gameObject);
         // 사망 처리 로직
     }
 }

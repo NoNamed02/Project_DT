@@ -16,6 +16,11 @@ public class CardSelector : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     public bool IsActive = false;
 
+    [SerializeField]
+    private int min = 1;
+    [SerializeField]
+    private int max = 10;
+
     void Start()
     {
         _canvasGroup = GetComponent<CanvasGroup>();
@@ -27,7 +32,8 @@ public class CardSelector : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     public void Init(int id)
     {
-        _cardID = id;
+        // _cardID = id;
+        _cardID = Random.Range(min - 1, max - 1);
         _cardSpec = CardDatabase.Instance.Get(_cardID);
         if (_cardSpec == null)
         {
@@ -76,18 +82,35 @@ public class CardSelector : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         CanvasGroup cg = GetComponent<CanvasGroup>();
         RectTransform rt = GetComponent<RectTransform>();
 
-        if (cg == null) cg = gameObject.AddComponent<CanvasGroup>();
+        if (cg == null)
+            cg = gameObject.AddComponent<CanvasGroup>();
+
+        // 부모(Image UI)
+        GameObject parentObj = transform.parent.gameObject;
+
+        CanvasGroup parentCg = parentObj.GetComponent<CanvasGroup>();
+        if (parentCg == null)
+            parentCg = parentObj.AddComponent<CanvasGroup>();
 
         Sequence seq = DOTween.Sequence();
 
+        // 카드 위로 사라짐 + 페이드 아웃
         seq.Append(rt.DOAnchorPosY(rt.anchoredPosition.y + 120f, 0.35f).SetEase(Ease.OutCubic));
         seq.Join(cg.DOFade(0f, 0.35f));
 
+        // 부모(Image UI)도 페이드 아웃
+        seq.Join(parentCg.DOFade(0f, 0.35f));
+
         seq.OnComplete(() =>
         {
+            // 부모 UI 비활성화
+            parentObj.SetActive(false);
+
+            // 카드 삭제
             Destroy(gameObject);
         });
     }
+
     public void PlayDisappearDownAnimation()
     {
         CanvasGroup cg = GetComponent<CanvasGroup>();

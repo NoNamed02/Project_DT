@@ -3,6 +3,7 @@ using UnityEngine;
 using System.Linq;
 using Unity.VisualScripting;
 using DarkTonic.MasterAudio;
+using DG.Tweening;
 
 public class BattleManager : MonoSingleton<BattleManager>
 {
@@ -15,6 +16,11 @@ public class BattleManager : MonoSingleton<BattleManager>
 
     private event ActionTest OnApplyDamage;
     public delegate void ActionTest();
+
+    [SerializeField]
+    private GameObject _resultUI;
+    [SerializeField]
+    private bool _isBattleEnd = false;
     void Start()
     {
         _player = FindAnyObjectByType<Player>();
@@ -24,10 +30,25 @@ public class BattleManager : MonoSingleton<BattleManager>
 
     void Update()
     {
-        if (_enemys.Count == 0)
+        if (_enemys.Count == 0 && !_isBattleEnd)
         {
-            Debug.Log("전투 끝");
+            _isBattleEnd = true;
+            ShowResultUI();
         }
+    }
+    private void ShowResultUI()
+    {
+        _resultUI.SetActive(true);
+
+        CanvasGroup cg = _resultUI.GetComponent<CanvasGroup>();
+        if (cg == null)
+        {
+            cg = _resultUI.AddComponent<CanvasGroup>();
+        }
+
+        cg.alpha = 0f;
+        cg.DOFade(1f, 0.5f)
+        .SetEase(Ease.OutQuad);
     }
     public void AddCameraEvent(ActionTest test)
     {
