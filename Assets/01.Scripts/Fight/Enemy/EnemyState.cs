@@ -80,4 +80,22 @@ public class EnemyState : MonoBehaviour
     /// <param name="stateIndex"></param>
     // 상태 내부에서 필요 시 호출
     protected void RequestStateChange(int idx) => RequestChange?.Invoke(idx);
+
+
+    /// <summary>
+    /// 딜레이 후 액션 실행 
+    /// </summary>
+    /// <param name="delay"></param>
+    /// <param name="action"></param>
+    /// <returns></returns>
+    protected void delayedAction(float delay, System.Action action)
+    {
+        StartCoroutine(DelayCoroutine(delay, action));
+    }
+
+    private IEnumerator DelayCoroutine(float delay, System.Action action)
+    {
+        yield return new WaitForSeconds(delay);
+        action?.Invoke();
+    }
 }

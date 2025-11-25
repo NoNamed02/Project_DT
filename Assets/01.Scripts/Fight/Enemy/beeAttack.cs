@@ -15,9 +15,18 @@ public class beeAttack : EnemyState
     {
         // 자신의 현재 체력의 10%만큼 데미지 계산
         int damage = Mathf.CeilToInt(GetCurrentHP() * 0.1f);
-        BattleManager.Instance.ApplyDamage(BattleManager.Instance.Player, damage);
+        
 
         base.Action();
+        delayedAction(3f, () => {
+
+            BattleManager.Instance.ApplyDamage(BattleManager.Instance.Player, damage);
+
+            delayedAction(2f, () =>
+            {
+                CheckStateChange();
+            });
+        });
     }
 
     public override void CheckStateChange()
