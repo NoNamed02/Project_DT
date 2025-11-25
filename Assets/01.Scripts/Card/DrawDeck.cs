@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class DrawDeck : Deck
 {
-    void Awake()
+    void Start()
     {
         Cards = RunTimeData.Instance.DeckList;
     }

@@ -26,11 +26,11 @@ public class Player : Character
     protected override void Awake()
     {
         base.Awake();
-        _drawDeck.SuffleDeck();
-        HPForSet = RunTimeData.Instance.HP;
     }
     void Start()
     {
+        _drawDeck.SuffleDeck();
+        HPForSet = RunTimeData.Instance.HP;
         if (TurnManager.Instance != null)
             TurnManager.Instance.OnTurnChanged += TurnChanged;
         DrawCard(_drawCount);
