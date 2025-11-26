@@ -79,6 +79,7 @@ public class Character : MonoBehaviour
     }
     public void ApplyBleeding(int amount, int HoldingTime)
     {
+        // amount 중첩될 시, (기존+new)/2?
         if (_statusAbnormalitys[(int)StatusAbnormalityNumber.bleeding].Amount > 0)
         {
             _statusAbnormalitys[(int)StatusAbnormalityNumber.bleeding].Amount = (_statusAbnormalitys[(int)StatusAbnormalityNumber.bleeding].Amount + amount) / 2;
