@@ -8,6 +8,9 @@ public class wolfAttack : EnemyState
     [SerializeField]
     private int DefenseStateIndex = 1;
 
+    [SerializeField]
+    private float probability = 0.1f;
+
     public override void Enter()
     {
         base.Enter();
@@ -16,11 +19,20 @@ public class wolfAttack : EnemyState
 
     public override void Action()
     {
-        // °ø°Ý 5
-        BattleManager.Instance.ApplyDamage(BattleManager.Instance.Player, 5);
-        // ÃâÇ÷, 10% È®·ü
-        // bleeding();
         base.Action();
+        delayedAction(3f, () => {
+            // 6ÀÇ ÇÇÇØ·Î °ø°Ý
+            BattleManager.Instance.ApplyDamage(BattleManager.Instance.Player, 6);
+            // 10% È®·ü·Î ÃôÇ÷
+            if (Random.value < probability) {
+                BattleManager.Instance.ApplyBleeding(BattleManager.Instance.Player, 5, 2);
+            }
+
+            delayedAction(2f, () =>
+            {
+                CheckStateChange();
+            });
+        });
     }
 
     public override void CheckStateChange()

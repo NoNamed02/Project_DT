@@ -16,8 +16,16 @@ public class plantAttack : EnemyState
 
     public override void Action()
     {
-        BattleManager.Instance.ApplyDamage(BattleManager.Instance.Player, 3);
         base.Action();
+        delayedAction(3f, () => { 
+            BattleManager.Instance.ApplyDamage(BattleManager.Instance.Player, 3);
+
+            delayedAction(2f, () =>
+            {
+                CheckStateChange();
+            });
+        });
+        
     }
 
     public override void CheckStateChange()

@@ -13,9 +13,14 @@ public class plantsHeal : EnemyState
 
     public override void Action()
     {
-        BattleManager.Instance.HealTarget(BattleManager.Instance.GetEnemys()[Random.Range(0, BattleManager.Instance.GetEnemys().Count)], 5);
-        RequestStateChange(AttackStateIndex);
-        base.Action();
+        delayedAction(3f, () =>
+        {
+            base.Action();
+            BattleManager.Instance.HealTarget(BattleManager.Instance.GetEnemys()[Random.Range(0, BattleManager.Instance.GetEnemys().Count)], 5);
+            
+            delayedAction(2f, () => { RequestStateChange(AttackStateIndex); });
+        }
+        );
     }
 
     public override void Exit()
