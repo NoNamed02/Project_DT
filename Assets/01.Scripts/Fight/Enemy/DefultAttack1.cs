@@ -14,7 +14,7 @@ public class DefultAttack1 : EnemyState
     }
     public override void Action()
     {
-        BattleManager.Instance.ApplyBleeding(BattleManager.Instance.Player, 2, 2);
+        BattleManager.Instance.ApplyEffect(BattleManager.Instance.Player, StatusAbnormalityNumber.bleeding, 2, 2);
         base.Action();
     }
     public override void CheckStateChange()

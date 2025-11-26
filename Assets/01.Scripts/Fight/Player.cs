@@ -1,3 +1,5 @@
+using DG.Tweening;
+using NUnit.Framework.Constraints;
 using UnityEngine;
 
 public class Player : Character
@@ -24,10 +26,11 @@ public class Player : Character
     protected override void Awake()
     {
         base.Awake();
-        _drawDeck.SuffleDeck();
     }
     void Start()
     {
+        _drawDeck.SuffleDeck();
+        HPForSet = RunTimeData.Instance.HP;
         if (TurnManager.Instance != null)
             TurnManager.Instance.OnTurnChanged += TurnChanged;
         DrawCard(_drawCount);
@@ -39,6 +42,13 @@ public class Player : Character
         {
             DrawCard(_drawCount);
             _cost = _costRecoveryValue;
+        }
+        else if (owner == TurnManager.TurnOwner.Enemy)
+        {
+            DOVirtual.DelayedCall(0.1f, () =>  // 0.1초 지연
+            {
+                HandArea.Instance.ThrowAwayHand();
+            });
         }
     }
 
@@ -63,6 +73,7 @@ public class Player : Character
                 }
             }
         }
+        // HandArea.Instance.SortCards();
     }
 
     public bool CanUseCard(int cardCost)

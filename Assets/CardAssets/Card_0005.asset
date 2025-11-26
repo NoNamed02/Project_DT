@@ -16,8 +16,7 @@ MonoBehaviour:
   cardName: "\uC804\uD22C \uC900\uBE44"
   cost: 1
   type: effect
-  instruction: "\uB2E4\uC74C \uACF5\uACA9\uC758 \uD53C\uD574\uB7C9\uC744 1.5\uBC30\uB85C
-    \uB9CC\uB4ED\uB2C8\uB2E4."
+  instruction: "\uD798\uC744 <b>1</b> \uC5BB\uC2B5\uB2C8\uB2E4."
   targeting:
   - player
   rarity: common
@@ -26,5 +25,5 @@ MonoBehaviour:
   - AddStack
   effectAmount: 01000000
   effectHoldingTime: 00000000
-  cardImage: {fileID: 0}
+  cardImage: {fileID: -7839056689181992794, guid: cad1beb2aa8b5264f810fbe51ba49cea, type: 3}
   cardCategoryBar: {fileID: 0}

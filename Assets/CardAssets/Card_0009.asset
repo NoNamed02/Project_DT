@@ -16,8 +16,8 @@ MonoBehaviour:
   cardName: "\uBF51\uC544\uCC22\uAE30"
   cost: 2
   type: attack
-  instruction: "\uB2E8\uAC80 \uC2A4\uD0DD\uC744 \uC804\uBD80 \uC18C\uBE44\uD558\uC5EC
-    \uC2A4\uD0DD\uB2F9 3 \uCD94\uAC00 \uD53C\uD574\uB97C \uC90D\uB2C8\uB2E4."
+  instruction: "\uC0C1\uB300\uC758 \uCD9C\uD608\uC2A4\uD0DD X \uC9C0\uC18D\uD134
+    \uB9CC\uD07C \uB370\uBBF8\uC9C0\uB97C \uC90D\uB2C8\uB2E4."
   targeting:
   - enemy
   - single
@@ -28,5 +28,5 @@ MonoBehaviour:
   - Damage
   effectAmount: 0100000003000000
   effectHoldingTime: 0000000000000000
-  cardImage: {fileID: 0}
+  cardImage: {fileID: 3965758638191431310, guid: 1b4b00a242b659d46a88438caf385c75, type: 3}
   cardCategoryBar: {fileID: 4340625043650993011, guid: bb21dc57e820fb642b188df2ac899118, type: 3}

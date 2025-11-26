@@ -1,13 +1,11 @@
 using System;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
+using UnityEngine.XR;
 
 public class CardManager : MonoBehaviour
 {
-    [Header("card area")]
-    [SerializeField]
-    private Transform _handArea;
-
     [Header("card prefab")]
     [SerializeField]
     private GameObject _card;
@@ -19,6 +17,10 @@ public class CardManager : MonoBehaviour
     [Header("graveyard Deck")]
     [SerializeField]
     private Deck _graveyardDeck;
+    
+    [Header("player's hand deck")]
+    [SerializeField]
+    private Deck _playerHand;
 
     [Header("player object")]
     [SerializeField]
@@ -29,8 +31,9 @@ public class CardManager : MonoBehaviour
     [SerializeField]
     private Card _selectCard;
 
+
     [SerializeField]
-    private Canvas _canvas;          // 최상위 Canvas
+    private CardAnimator _cardAnimator;
 
     void Start()
     {
@@ -43,10 +46,11 @@ public class CardManager : MonoBehaviour
     /// <param name="cardID"></param>
     public void InstanceCard(int cardID)
     {
-        GameObject card = Instantiate(_card, _handArea);
-        card.GetComponent<Card>().Init(_canvas, cardID);
-
+        GameObject card = Instantiate(_card, HandArea.Instance.GetComponent<RectTransform>());
+        card.GetComponent<Card>().Init(cardID, _cardAnimator);
         card.GetComponent<Card>().OnUsingCard += UsingCard;
+        card.GetComponent<Card>().OnDiscardCard += DiscardCard;
+        _cardAnimator.DrawCard(card.GetComponent<Card>());
     }
 
     /// <summary>
@@ -56,23 +60,27 @@ public class CardManager : MonoBehaviour
     /// <param name="cardID"></param>
     public void UsingCard(Card card, Character target)
     {
-        //Debug.Log($"target:{target} / card : {card.CardID}");
-
-        // foreach (var cardeffect in card.cardEffects)
-        // {
-        //     cardeffect.Execute(target, card);
-        //     // StartCoroutine 로 지연처리
-        // }
-
+        _playerHand.DeleteCard(card.CardID);
+        _graveyardDeck.SetCardToTop(card.CardID);
         for (int i = 0; i < card.cardEffects.Count; i++)
         {
-            card.cardEffects[i].Execute(target, card.CardSpec.effectAmount[i], card.CardSpec.effectHoldingTime[i]);
-        }
+            int index = i;
+            float delay = 0.3f * i;
 
-        card.ActiveCard(); // 카드 사용 처리
-        _graveyardDeck.SetCardToTop(card.CardID);
-        
+            DOVirtual.DelayedCall(delay, () =>
+            {
+                card.cardEffects[index].Execute(
+                    target,
+                    card.CardSpec.effectAmount[index],
+                    card.CardSpec.effectHoldingTime[index]
+                );
+            });
+        }
     }
 
-    //IEnumerator 로 처리
+    public void DiscardCard(Card card)
+    {
+        _playerHand.DeleteCard(card.CardID);
+        _graveyardDeck.SetCardToTop(card.CardID);
+    }
 }

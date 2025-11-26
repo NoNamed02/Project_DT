@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,6 +7,12 @@ public class FightUIManager : MonoBehaviour
     [Header("플레이어 턴 종료 버튼")]
     [SerializeField]
     private Button _endTurnButton;
+
+    [SerializeField]
+    private TextMeshProUGUI _coutCountText;
+
+    [SerializeField]
+    private GameObject _cardSelectorUI;
 
     void Start()
     {
@@ -20,6 +27,10 @@ public class FightUIManager : MonoBehaviour
             HandleTurnChanged(TurnManager.Instance.CurrentOwner);
         }
     }
+    void Update()
+    {
+        _coutCountText.text = BattleManager.Instance.Player.Cost.ToString();
+    }
 
     private void HandleTurnChanged(TurnManager.TurnOwner owner)
     {
@@ -32,5 +43,9 @@ public class FightUIManager : MonoBehaviour
         {
             TurnManager.Instance.NextTurn();
         }
+    }
+    public void ActiveSelector()
+    {
+        _cardSelectorUI.SetActive(true);
     }
 }
