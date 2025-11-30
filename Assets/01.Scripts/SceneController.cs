@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using DG.Tweening;
+using System.Collections; // IEnumerator 사용을 위해 명시
 
 public class SceneController : MonoSingleton<SceneController>
 {
@@ -9,15 +10,16 @@ public class SceneController : MonoSingleton<SceneController>
 
     void Start()
     {
-        LoadingUI = transform.GetChild(0).gameObject;
+        if (transform.childCount > 0)
+        {
+            LoadingUI = transform.GetChild(0).gameObject;
+            loadingGroup = LoadingUI.GetComponent<CanvasGroup>();
+            if (loadingGroup == null)
+                loadingGroup = LoadingUI.AddComponent<CanvasGroup>();
 
-        // CanvasGroup 캐싱
-        loadingGroup = LoadingUI.GetComponent<CanvasGroup>();
-        if (loadingGroup == null)
-            loadingGroup = LoadingUI.AddComponent<CanvasGroup>();
-
-        LoadingUI.SetActive(false);
-        loadingGroup.alpha = 0;
+            LoadingUI.SetActive(false);
+            loadingGroup.alpha = 0;
+        }
     }
 
     public void SceneMove(string sceneName)
@@ -25,27 +27,30 @@ public class SceneController : MonoSingleton<SceneController>
         StartCoroutine(LoadSceneRoutine(sceneName));
     }
 
-    private System.Collections.IEnumerator LoadSceneRoutine(string sceneName)
+    private IEnumerator LoadSceneRoutine(string sceneName)
     {
-        // 로딩 UI 활성화
         LoadingUI.SetActive(true);
-
-        // 페이드인 (0 → 1)
         loadingGroup.alpha = 0;
-        loadingGroup.DOFade(1f, 0.5f);   // 필요하면 시간 조절
+        yield return loadingGroup.DOFade(1f, 0.5f).WaitForCompletion();
 
-        // 씬 비동기 로드 시작
         AsyncOperation op = SceneManager.LoadSceneAsync(sceneName);
         op.allowSceneActivation = false;
 
-        // 로딩 진행률 대기
-        while (op.progress < 0.9f)
+        float timer = 0.0f;
+        
+        while (op.progress < 0.9f || timer < 2.0f)
         {
             yield return null;
+            timer += Time.unscaledDeltaTime; 
         }
 
-        // 충분히 로딩된 시점 → 씬 이동
         op.allowSceneActivation = true;
-        LoadingUI.SetActive(false);
+
+        yield return null; 
+
+        loadingGroup.DOFade(0f, 0.5f).OnComplete(() =>
+        {
+            LoadingUI.SetActive(false);
+        });
     }
 }
