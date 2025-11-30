@@ -13,6 +13,8 @@ public class FightUIManager : MonoBehaviour
 
     [SerializeField]
     private GameObject _cardSelectorUI;
+    [SerializeField]
+    private Button _backToNodeMapBtn;
 
     void Start()
     {
@@ -26,6 +28,9 @@ public class FightUIManager : MonoBehaviour
             // 초기 상태도 반영
             HandleTurnChanged(TurnManager.Instance.CurrentOwner);
         }
+        _backToNodeMapBtn.onClick.AddListener(() =>
+            SceneController.Instance.SceneMove("NodeMap")
+        );
     }
     void Update()
     {
