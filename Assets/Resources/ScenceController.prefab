@@ -339,7 +339,7 @@ GameObject:
   - component: {fileID: 3185147153863256735}
   - component: {fileID: 8427610358974871804}
   m_Layer: 0
-  m_Name: ScenceManager
+  m_Name: ScenceController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -705,6 +705,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 632383942}
   m_CullTransparentMesh: 1
+--- !u!114 &632985773 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8427610358974871804, guid: 4f251209f20e2c548a9ce9a8163e461f, type: 3}
+  m_PrefabInstance: {fileID: 2078784165}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 971aae2f4f1217d4ea4608e12062dd8d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &694449424
 GameObject:
   m_ObjectHideFlags: 0
@@ -924,7 +935,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 987412927}
+      - m_Target: {fileID: 632985773}
         m_TargetAssemblyTypeName: SceneController, Assembly-CSharp
         m_MethodName: SceneMove
         m_Mode: 5
@@ -1186,17 +1197,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 966294967}
   m_CullTransparentMesh: 1
---- !u!114 &987412927 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8427610358974871804, guid: 4f251209f20e2c548a9ce9a8163e461f, type: 3}
-  m_PrefabInstance: {fileID: 4615061104880951217}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 971aae2f4f1217d4ea4608e12062dd8d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1024283007
 GameObject:
   m_ObjectHideFlags: 0
@@ -2946,7 +2946,7 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
---- !u!1001 &4615061104880951217
+--- !u!1001 &2078784165
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -2954,10 +2954,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 637621403100794201, guid: 4f251209f20e2c548a9ce9a8163e461f, type: 3}
-      propertyPath: m_Camera
-      value: 
-      objectReference: {fileID: 930458206}
     - target: {fileID: 7840200635481796047, guid: 4f251209f20e2c548a9ce9a8163e461f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -3000,7 +2996,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9070408700538454028, guid: 4f251209f20e2c548a9ce9a8163e461f, type: 3}
       propertyPath: m_Name
-      value: ScenceManager
+      value: ScenceController
       objectReference: {fileID: 0}
     - target: {fileID: 9070408700538454028, guid: 4f251209f20e2c548a9ce9a8163e461f, type: 3}
       propertyPath: m_IsActive
@@ -3021,4 +3017,4 @@ SceneRoots:
   - {fileID: 2075474336}
   - {fileID: 1971705349}
   - {fileID: 1534739260}
-  - {fileID: 4615061104880951217}
+  - {fileID: 2078784165}
