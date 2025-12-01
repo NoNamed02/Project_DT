@@ -2,6 +2,7 @@ using UnityEngine;
 using DG.Tweening;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using DarkTonic.MasterAudio;
 
 public class Node : MonoBehaviour
 {
@@ -36,6 +37,9 @@ public class Node : MonoBehaviour
     private void Start()
     {
         CreateLines();
+        GetComponent<Button>().onClick.AddListener(()=>
+            MasterAudio.PlaySound("blade_hit_bind")
+        );
     }
 
     private void CreateLines()

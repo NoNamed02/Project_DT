@@ -1,3 +1,4 @@
+using DarkTonic.MasterAudio;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -49,8 +50,8 @@ public class FightUIManager : MonoBehaviour
             TurnManager.Instance.NextTurn();
         }
     }
-    public void ActiveSelector()
+    public void PlayCardSelectSound()
     {
-        _cardSelectorUI.SetActive(true);
+        MasterAudio.PlaySound("fnt_ui_use_metal");
     }
 }
