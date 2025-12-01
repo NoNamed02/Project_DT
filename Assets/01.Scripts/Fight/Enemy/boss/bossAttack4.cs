@@ -18,7 +18,7 @@ public class bossAttack4 : EnemyState
     public override void Action()
     {
         // 5만큼 2턴 출혈
-        BattleManager.Instance.ApplyBleeding(BattleManager.Instance.Player, bleedingDamage, 2);
+        //BattleManager.Instance.ApplyBleeding(BattleManager.Instance.Player, bleedingDamage, 2);
         // 8 공격
         BattleManager.Instance.ApplyDamage(BattleManager.Instance.Player, attackDamage);
         base.Action();

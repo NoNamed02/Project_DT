@@ -25,7 +25,7 @@ public class wolfAttack : EnemyState
             BattleManager.Instance.ApplyDamage(BattleManager.Instance.Player, 6);
             // 10% È®·ü·Î ÃôÇ÷
             if (Random.value < probability) {
-                BattleManager.Instance.ApplyBleeding(BattleManager.Instance.Player, 5, 2);
+                //BattleManager.Instance.ApplyBleeding(BattleManager.Instance.Player, 5, 2);
             }
 
             delayedAction(2f, () =>

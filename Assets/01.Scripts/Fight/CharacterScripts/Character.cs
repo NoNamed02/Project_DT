@@ -85,6 +85,14 @@ public class Character : MonoBehaviour
     }
     public void ApplyEffect(StatusAbnormalityNumber effectID, int amount, int holdingTime)
     {
+        if (effectID == StatusAbnormalityNumber.poison)
+        {
+            int currentPoisonStack = GetTotalPoisonStack();
+
+            if(currentPoisonStack + amount > 8)
+                amount = 8 - currentPoisonStack;
+        }
+
         var effect = new StatusAbnormality(effectID, amount, holdingTime);
         _statusAbnormalitys.Add(effect);
         if (effectID == StatusAbnormalityNumber.dodge)
@@ -95,6 +103,24 @@ public class Character : MonoBehaviour
             }
         }
     }
+
+    /// <summary>
+    /// 현재 중독 스택 합계 반환
+    /// </summary>
+    /// <returns></returns>
+    private int GetTotalPoisonStack()
+    {
+        int totalStack = 0;
+        foreach (var effect in _statusAbnormalitys)
+        {
+            if (effect.EffectID == StatusAbnormalityNumber.poison)
+            {
+                totalStack += effect.Amount;
+            }
+        }
+        return totalStack;
+    }
+
     private bool CheckDodge()
     {
         int amount = 0;
@@ -145,6 +171,57 @@ public class Character : MonoBehaviour
         if (CheckDie())
         {
             Die();
+        }
+    }
+
+    public void EffectPoison()
+    {
+        int totalPoisonStack = 0;
+
+        for (int i = _statusAbnormalitys.Count - 1; i >= 0; i--)
+        {
+            if (_statusAbnormalitys[i].EffectID == StatusAbnormalityNumber.poison)
+            {
+                totalPoisonStack += _statusAbnormalitys[i].Amount;
+            }
+        }
+
+        if (totalPoisonStack <= 0) return;
+
+        int poisonDamage = totalPoisonStack * 2;
+        _stats.CurrentHP -= poisonDamage;
+        Debug.Log($"{name}이(가) 중독으로 {poisonDamage} 대미지를 받음 (스택: {totalPoisonStack})");
+
+        ReducePoisonStack(1);
+
+        if (CheckDie()) Die();
+    }
+
+    public void ReducePoisonStack(int reduceAmount)
+    {
+        int remaining = reduceAmount;
+
+        for (int i = _statusAbnormalitys.Count - 1; i >= 0; i--)
+        {
+            if (_statusAbnormalitys[i].EffectID == StatusAbnormalityNumber.poison)
+            {
+                var effect = _statusAbnormalitys[i];
+
+                if(effect.Amount <= remaining)
+                {
+                    remaining -= effect.Amount;
+                    _statusAbnormalitys.RemoveAt(i);
+                }
+                else
+                {
+                    effect.Amount -= remaining;
+                    _statusAbnormalitys[i] = effect;
+                    remaining = 0;
+                    break;
+                }
+
+                if(remaining <= 0) break;
+            }
         }
     }
 
