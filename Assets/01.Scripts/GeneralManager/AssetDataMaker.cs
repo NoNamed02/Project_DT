@@ -6,6 +6,7 @@ using System.Linq;
 
 public class AssetDataMaker : MonoBehaviour
 {
+#if UNITY_EDITOR
     [MenuItem("CustomFunc/Card Generator/Generate CardSpecData")]
     public static void GenerateAttackCards()
     {
@@ -93,13 +94,11 @@ public class AssetDataMaker : MonoBehaviour
             cardSpec.effectAmount = effectAmount;
             cardSpec.effectHoldingTime = effectHoldingTime;
 
-#if UNITY_EDITOR
             Sprite sprite = AssetDatabase.LoadAssetAtPath<Sprite>($"Assets/PrivateAssets/CardSprite/{id}.png");
             cardSpec.cardImage = sprite;
 
             sprite = AssetDatabase.LoadAssetAtPath<Sprite>($"Assets/02.Sprites/card_category_{type}.png");
             cardSpec.cardCategoryBar = sprite;
-#endif
 
 
             string assetPath = $"Assets/CardAssets/Card_{id}.asset";
@@ -144,6 +143,7 @@ public class AssetDataMaker : MonoBehaviour
         AssetDatabase.Refresh();
         Debug.Log("카드 생성 완료");
     }
+#endif
 }
 
 

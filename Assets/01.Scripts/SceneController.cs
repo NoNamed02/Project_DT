@@ -1,7 +1,8 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using DG.Tweening;
-using System.Collections; // IEnumerator 사용을 위해 명시
+using System.Collections;
+using DarkTonic.MasterAudio; // IEnumerator 사용을 위해 명시
 
 public class SceneController : MonoSingleton<SceneController>
 {
@@ -24,6 +25,7 @@ public class SceneController : MonoSingleton<SceneController>
 
     public void SceneMove(string sceneName)
     {
+        MasterAudio.PlaySound("fnt_ui_use_metal");
         StartCoroutine(LoadSceneRoutine(sceneName));
     }
 
