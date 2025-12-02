@@ -1,41 +1,67 @@
+using System.Net.Cache;
 using UnityEngine;
 
 public class bossAttack2 : EnemyState
 {
-    // 강타 / 맹렬한 일격
-    // HP가 반 이하일 때 대미지 1.5배 상승
+    [SerializeField] private int nextAttackIndex = 2;
+    [SerializeField] private int bossHealIndex = 5;
 
-    [SerializeField]
-    private int BossBleeding = 2;
+    [SerializeField] private int currentHP = 0;
 
-    public int SlugDamage = 15;
-    public bool HPHalfLess = false;
-    public float damageUP = 1.5f;
+    [Header("약화 설정")]
+    [SerializeField] private int _baseWeakenAmount = 2;
+    [SerializeField] private int _weakenDuration = 2;
+
+    [Header("페이즈 설정")]
+    [SerializeField] private float _phase2Multiplier = 1.5f;
+
+    private bool IsPhase2 => GetCurrentHP() <= GetMaxHP() * 0.5f;
+
+    private int GetWeakenAmount()
+    {
+        if (IsPhase2)
+            return Mathf.CeilToInt(_baseWeakenAmount * _phase2Multiplier);
+        return _baseWeakenAmount;
+    }
 
     public override void Enter()
     {
         base.Enter();
-        // if 보스의 체력이 반 이하, HPHalfLess = true
-        if (GetCurrentHP() <= GetMaxHP() / 2)
-            HPHalfLess = true;
-        else HPHalfLess = false;
+        currentHP = GetCurrentHP();
     }
 
     public override void Action()
     {
-        base.Action();
+        int weakenAmount = GetWeakenAmount();
         delayedAction(3f, () =>
         {
-            // if 보스의 체력이 반 이하, 이상
-            if (HPHalfLess)
-                BattleManager.Instance.ApplyDamage(BattleManager.Instance.Player, (int)(SlugDamage * damageUP));
-            else BattleManager.Instance.ApplyDamage(BattleManager.Instance.Player, SlugDamage);
+            BattleManager.Instance.ApplyEffect(
+                BattleManager.Instance.Player,
+                StatusAbnormalityNumber.weaken,
+                weakenAmount, _weakenDuration);
 
-            delayedAction(2f, () =>
-            {
-                RequestStateChange(BossBleeding);
-            });
+            base.Action();
+            RequestStateChange(nextAttackIndex);
         });
+    }
+
+    public override void CheckStateChange()
+    {
+        base.CheckStateChange();
+        if (currentHP - GetCurrentHP() >= 6)
+            RequestStateChange(bossHealIndex);
+    }
+
+    public override void Exit()
+    {
+        base.Exit();
+    }
+
+    public override IntentData GetIntent()
+    {
+        int weakenAmount = GetWeakenAmount();
+        string desc = $"공격력을 {weakenAmount}만큼 {_weakenDuration}턴 동안 감소시킵니다.";
+        return new IntentData(IntentType.Weaken, weakenAmount, desc);
     }
 }
 

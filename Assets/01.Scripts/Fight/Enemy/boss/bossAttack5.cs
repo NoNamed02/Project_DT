@@ -1,25 +1,25 @@
 using UnityEngine;
 
-public class bossAttack3 : EnemyState
+public class bossAttack5 : EnemyState
 {
-    [SerializeField] private int nextAttackIndex = 3;
+    [SerializeField] private int nextAttackIndex = 0;
     [SerializeField] private int bossHealIndex = 5;
 
     [SerializeField] private int currentHP = 0;
 
-    [Header("방어 설정")]
-    [SerializeField] private int _baseShieldAmount = 8;
+    [Header("중독 설정")]
+    [SerializeField] private int _basePoisonStack = 3;
 
     [Header("페이즈 설정")]
     [SerializeField] private float _phase2Multiplier = 1.5f;
 
     private bool IsPhase2 => GetCurrentHP() <= GetMaxHP() * 0.5f;
 
-    private int GetShieldAmount()
+    private int GetPoisonStack()
     {
         if (IsPhase2)
-            return Mathf.CeilToInt(_baseShieldAmount * _phase2Multiplier);
-        return _baseShieldAmount;
+            return Mathf.CeilToInt(_basePoisonStack * _phase2Multiplier);
+        return _basePoisonStack;
     }
 
     public override void Enter()
@@ -30,11 +30,16 @@ public class bossAttack3 : EnemyState
 
     public override void Action()
     {
-        int shieldAmount = GetShieldAmount();
+        int poisonStack = GetPoisonStack();
 
         delayedAction(3f, () =>
         {
-            BattleManager.Instance.ApplyShield(Enemy, shieldAmount);
+            BattleManager.Instance.ApplyEffect(
+                BattleManager.Instance.Player,
+                StatusAbnormalityNumber.poison,
+                poisonStack,
+                0
+            );
 
             base.Action();
             RequestStateChange(nextAttackIndex);
@@ -55,7 +60,8 @@ public class bossAttack3 : EnemyState
 
     public override IntentData GetIntent()
     {
-        int shieldAmount = GetShieldAmount();
-        return new IntentData(IntentType.Defend, shieldAmount);
+        int poisonStack = GetPoisonStack();
+        string desc = $"중독 {poisonStack}스택을 부여합니다.";
+        return new IntentData(IntentType.Poison, poisonStack, desc);
     }
 }

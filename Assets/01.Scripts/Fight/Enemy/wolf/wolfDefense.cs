@@ -3,7 +3,10 @@ using UnityEngine;
 public class wolfDefense : EnemyState
 {
     [SerializeField]
-    private int AttackStateIndex = 0;
+    private int nextAttackIndex = 0;
+
+    [SerializeField]
+    private int _shieldAmount = 7;
 
     public override void Enter()
     {
@@ -12,22 +15,26 @@ public class wolfDefense : EnemyState
 
     public override void Action()
     {
-        base.Action();
+        
         delayedAction(3f, () => {
             // 자신에게 방어막 7 추가
-            BattleManager.Instance.ApplyShield(transform.parent.GetComponent<Character>(), 7);
+            BattleManager.Instance.ApplyShield(
+                Enemy, _shieldAmount
+            );
 
-            delayedAction(2f, () =>
-            {
-                CheckStateChange();
-                RequestStateChange(AttackStateIndex);
-            });
+            base.Action();
+            RequestStateChange(nextAttackIndex);
         });
     }
 
     public override void Exit()
     {
         base.Exit();
+    }
+
+    public override IntentData GetIntent()
+    {
+        return new IntentData(IntentType.Defend, _shieldAmount);
     }
 }
 

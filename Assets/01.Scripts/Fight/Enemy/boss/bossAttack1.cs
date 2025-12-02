@@ -2,20 +2,64 @@ using UnityEngine;
 
 public class bossAttack1 : EnemyState
 {
-    // 상태이상, 2텀동안 플레이어 공격력 소량 감소. 디버프.
-    [SerializeField]
-    private int BossSlug = 1;
+    [SerializeField] private int nextAttackIndex = 1;
+    [SerializeField] private int bossHealIndex = 5;
+
+    [SerializeField] private int currentHP = 0;
+
+    [Header("공격 설정")]
+    [SerializeField] private int _baseDamage = 15;
+
+    [Header("페이즈 설정")]
+    [SerializeField] private float _Phase2Multiplier = 1.5f;
+
+    private bool IsPhase2 => GetCurrentHP() <= GetMaxHP() * 0.5f;
+
+    private int GetDamage()
+    {
+        if (IsPhase2)
+            return Mathf.CeilToInt(_baseDamage * _Phase2Multiplier);
+        return _baseDamage;
+    }
 
     public override void Enter()
     {
         base.Enter();
+        currentHP = GetCurrentHP();
     }
 
     public override void Action()
     {
-        // 공격 감소 디버프 상태이상 걸기 Player()
-        // 고민 중...
-        base.Action();
-        RequestStateChange(BossSlug);
+        int damage = GetDamage();
+
+        delayedAction(3f, () =>
+        {
+            BattleManager.Instance.ApplyDamage(
+                Enemy,
+                BattleManager.Instance.Player,
+                damage
+            );
+
+            base.Action();
+            RequestStateChange(nextAttackIndex);
+        });
+    }
+
+    public override void CheckStateChange()
+    {
+        base.CheckStateChange();
+        if (currentHP - GetCurrentHP() >= 6)
+            RequestStateChange(bossHealIndex);
+    }
+
+    public override void Exit()
+    {
+        base.Exit();
+    }
+
+    public override IntentData GetIntent()
+    {
+        int damage = GetDamage();
+        return new IntentData(IntentType.Attack, damage);
     }
 }
