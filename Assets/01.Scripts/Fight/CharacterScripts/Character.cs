@@ -225,6 +225,58 @@ public class Character : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 현재 공격력 감소 효과의 총 감소량 반환
+    /// Amount가 감소량, HoldingTime 지속 턴
+    /// 여러 개가 있을 시 최대값만 적용 (중첨X)
+    /// </summary>
+    /// <returns></returns>
+    public int GetWeakenAmount()
+    {
+        int maxWeaken = 0;
+        foreach (var effect in _statusAbnormalitys)
+        {
+            if(effect.Amount > maxWeaken)
+                maxWeaken = effect.Amount;
+        }
+        return maxWeaken;
+    }
+
+    /// <summary>
+    /// 공격력 감소가 적용된 실제 데미지 계산
+    /// </summary>
+    /// <param name="baseDamage"></param>
+    /// <returns></returns>
+    public int CalculateWeakenedDamage(int baseDamage)
+    {
+        int weakenAmount = GetWeakenAmount();
+
+        if (weakenAmount <= 0) return baseDamage;
+
+        int finalDamage = Mathf.Max(0, baseDamage - weakenAmount);
+
+        return finalDamage;
+    }
+
+    /// <summary>
+    /// 공격력 감소 효과 업데이트, 턴 종료 시 지속 시간 감소
+    /// </summary>
+    public void UpdateWeaken()
+    {
+        for (int i = _statusAbnormalitys.Count - 1; i >= 0; i--)
+        {
+            if (_statusAbnormalitys[i].EffectID == StatusAbnormalityNumber.weaken)
+            {
+                var effect = _statusAbnormalitys[i];
+                effect.HoldingTime--;
+
+                if (effect.HoldingTime <= 0)
+                    _statusAbnormalitys.RemoveAt(i);
+                else _statusAbnormalitys[i] = effect;
+            }
+        }
+    }
+
     private bool CheckDie()
     {
         return _stats.CurrentHP <= 0;

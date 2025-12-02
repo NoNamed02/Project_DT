@@ -2,5 +2,6 @@ public enum StatusAbnormalityNumber
 {
     bleeding,
     poison,
-    dodge
+    dodge,
+    weaken
 }
