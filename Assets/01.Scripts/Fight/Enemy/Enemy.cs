@@ -18,6 +18,9 @@ public class Enemy : Character
     // 콜백 묶음
     private Action<int> _requestChange;
     private Action _reportDone;
+
+    public event Action OnIntentChanged;
+
     protected override void Awake()
     {
         base.Awake();
@@ -40,6 +43,9 @@ public class Enemy : Character
         _currentState = _states[0];
 
         _currentState.Enter();
+
+        OnIntentChanged?.Invoke();
+
     }
 
     void Update()
@@ -98,6 +104,8 @@ public class Enemy : Character
         _currentState.Exit();
         _currentState = next;
         _currentState.Enter();
+
+        OnIntentChanged?.Invoke();
     }
 
     // state 행동 끝났을시 수행
@@ -120,5 +128,32 @@ public class Enemy : Character
         yield return new WaitForSeconds(2f);
         Debug.Log("enemy turn end");
         TurnManager.Instance.NextTurn();
+    }
+
+    /// <summary>
+    /// 현재 상태의 단일 Intent 정보 반환 (하위 호환)
+    /// </summary>
+    public IntentData GetCurrentIntent()
+    {
+        if (_currentState == null)
+            return new IntentData(IntentType.Unknown);
+
+        return _currentState.GetIntent();
+    }
+
+    /// <summary>
+    /// 현재 상태의 다중 Intent 정보 반환
+    /// </summary>
+    public IntentDataSet GetCurrentIntentSet()
+    {
+        if (_currentState == null)
+            return new IntentDataSet(new IntentData(IntentType.Unknown));
+
+        return _currentState.GetIntentSet();
+    }
+
+    public EnemyState GetCurrentState()
+    {
+        return _currentState;
     }
 }

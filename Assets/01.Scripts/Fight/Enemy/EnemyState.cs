@@ -104,4 +104,18 @@ public class EnemyState : MonoBehaviour
         yield return new WaitForSeconds(delay);
         action?.Invoke();
     }
+
+    /// <summary>
+    /// 이 State의 패턴 정보 반환
+    /// </summary>
+    /// <returns></returns>
+    public virtual IntentData GetIntent()
+    {
+        return new IntentData(IntentType.Unknown);
+    }
+
+    public virtual IntentDataSet GetIntentSet()
+    {
+        return new IntentDataSet(GetIntent());
+    }
 }
