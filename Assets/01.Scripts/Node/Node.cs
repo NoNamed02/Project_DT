@@ -37,38 +37,77 @@ public class Node : MonoBehaviour
     private void Start()
     {
         CreateLines();
-        GetComponent<Button>().onClick.AddListener(()=>
+        GetComponent<Button>().onClick.AddListener(() =>
             MasterAudio.PlaySound("blade_hit_bind")
         );
     }
-
     private void CreateLines()
     {
+        Transform lineLayer = GameObject.Find("LineLayer").transform;
+
         foreach (Node targetNode in _linkNode)
         {
             if (targetNode == null) continue;
 
-            GameObject lineObj = new GameObject($"Line_To_{targetNode.name}");
-            
-            lineObj.transform.SetParent(transform);
-            lineObj.transform.localPosition = Vector3.zero; // 위치 초기화
-            lineObj.transform.localScale = Vector3.one;
+            // 선 오브젝트 생성
+            GameObject lineObj = new GameObject($"LineUI_To_{targetNode.name}", typeof(Image));
+            lineObj.transform.SetParent(lineLayer, false);
 
-            LineRenderer lr = lineObj.AddComponent<LineRenderer>();
+            Image img = lineObj.GetComponent<Image>();
+            img.color = LineColor;
 
-            lr.startWidth = LineWidth;
-            lr.endWidth = LineWidth;
-            lr.material = LineMaterial != null ? LineMaterial : new Material(Shader.Find("Sprites/Default")); // 재질 없으면 기본 할당
-            lr.startColor = LineColor;
-            lr.endColor = LineColor;
-            
-            lr.sortingLayerName = "Default"; 
-            lr.sortingOrder = -1;
-            lr.positionCount = 2;
-            lr.SetPosition(0, transform.position); 
-            lr.SetPosition(1, targetNode.transform.position);
+            RectTransform rt = lineObj.GetComponent<RectTransform>();
+
+            // 두 노드의 화면 좌표
+            Vector3 start = transform.position;
+            Vector3 end = targetNode.transform.position;
+
+            // 거리
+            float distance = Vector3.Distance(start, end);
+
+            // 중간 지점
+            Vector3 mid = (start + end) * 0.5f;
+            rt.position = mid;
+
+            // 크기 설정 (width = 거리, height = 선 두께)
+            rt.sizeDelta = new Vector2(distance, LineWidth);
+
+            // 방향 계산
+            Vector3 dir = (end - start).normalized;
+            float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+            rt.rotation = Quaternion.Euler(0, 0, angle);
+            rt.localScale = new Vector3(100f, 100f, 1f);
         }
     }
+
+
+    // private void CreateLines()
+    // {
+    //     foreach (Node targetNode in _linkNode)
+    //     {
+    //         if (targetNode == null) continue;
+
+    //         GameObject lineObj = new GameObject($"Line_To_{targetNode.name}");
+            
+    //         lineObj.transform.SetParent(transform);
+    //         lineObj.transform.localPosition = Vector3.zero; // 위치 초기화
+    //         lineObj.transform.localScale = Vector3.one;
+
+    //         LineRenderer lr = lineObj.AddComponent<LineRenderer>();
+
+    //         lr.startWidth = LineWidth;
+    //         lr.endWidth = LineWidth;
+    //         lr.material = LineMaterial != null ? LineMaterial : new Material(Shader.Find("Sprites/Default")); // 재질 없으면 기본 할당
+    //         lr.startColor = LineColor;
+    //         lr.endColor = LineColor;
+            
+    //         lr.sortingLayerName = "Default"; 
+    //         lr.sortingOrder = -1;
+    //         lr.positionCount = 2;
+    //         lr.SetPosition(0, transform.position); 
+    //         lr.SetPosition(1, targetNode.transform.position);
+    //     }
+    // }
 
     private void Update()
     {
@@ -125,8 +164,8 @@ public class Node : MonoBehaviour
     }
 
     private void GoToFight() { UpdateCurrentNodeData(); SceneController.Instance.SceneMove("Fight"); }
-    private void GoToRest() { UpdateCurrentNodeData(); } // 로직 추가 필요
-    private void GoToEvent() { UpdateCurrentNodeData(); } // 로직 추가 필요
+    private void GoToRest() { UpdateCurrentNodeData(); }
+    private void GoToEvent() { UpdateCurrentNodeData();  NodeEventUI.Instance.StartEvent(); } // 로직 추가 필요
 
     private void UpdateCurrentNodeData()
     {
