@@ -2,7 +2,6 @@ using UnityEngine;
 using DG.Tweening;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
-using DarkTonic.MasterAudio;
 
 public class MainUIController : MonoBehaviour
 {
@@ -28,7 +27,6 @@ public class MainUIController : MonoBehaviour
 
     public void OnEnableUI(GameObject UI)
     {
-        MasterAudio.PlaySound("fnt_ui_use_metal");
         UI.gameObject.SetActive(true);
         UI.GetComponent<CanvasGroup>().alpha = 0f;
         UI.GetComponent<CanvasGroup>().DOFade(1f, duration).SetUpdate(true);
@@ -36,7 +34,6 @@ public class MainUIController : MonoBehaviour
 
     public void FadeOutAndDisable(GameObject UI)
     {
-        MasterAudio.PlaySound("fnt_ui_use_metal");
         UI.GetComponent<CanvasGroup>().DOFade(0f, duration).SetUpdate(true)
             .OnComplete(() => UI.gameObject.SetActive(false));
     }
