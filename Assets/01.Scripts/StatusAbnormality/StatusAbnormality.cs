@@ -16,6 +16,11 @@ public class StatusAbnormality
             this.Name = "출혈";
         else if (EffectID == StatusAbnormalityNumber.dodge)
             this.Name = "회피";
+        else if (EffectID == StatusAbnormalityNumber.poison)
+            this.Name = "중독";
+        else if (EffectID == StatusAbnormalityNumber.weaken)
+            this.Name = "약화";
+
         this.EffectID = EffectID;
         this.Amount = Amount;
         this.HoldingTime = HoldingTime;

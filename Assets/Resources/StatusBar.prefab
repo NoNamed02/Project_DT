@@ -671,8 +671,9 @@ MonoBehaviour:
   _character: {fileID: 0}
   _icons:
   - {fileID: 2978838401516324893, guid: 91da4ec5d8b82fb44a8b95dd5b6e530c, type: 3}
-  - {fileID: 0}
+  - {fileID: 2978838401516324893, guid: 8d15ced6270486a409d0bdee1b423520, type: 3}
   - {fileID: 2978838401516324893, guid: c918cbff03816264a9332345122faef5, type: 3}
+  - {fileID: 2978838401516324893, guid: f20850d276b716d479913ba8fa978830, type: 3}
 --- !u!1 &7479509182722632619
 GameObject:
   m_ObjectHideFlags: 0

@@ -37,6 +37,8 @@ public class BattleManager : MonoSingleton<BattleManager>
             ShowResultUI();
         }
     }
+
+
     private void ShowResultUI()
     {
         _resultUI.SetActive(true);
@@ -67,6 +69,31 @@ public class BattleManager : MonoSingleton<BattleManager>
         int finalDamage = damage;
         target.TakeDamage(finalDamage);
         Debug.Log($"------{target}에게 {damage}만큼의 데미지를 줌");
+
+        OnApplyDamage?.Invoke();
+        MasterAudio.PlaySound("blade_whoosh");
+        VFXManager.Instance.SpawnVFX(target.gameObject, VFXManager.VFXList.Hit);
+    }
+
+    /// <summary>
+    /// 공격자와 피격자 지정 (공격력 감소 적용)
+    /// </summary>
+    /// <param name="attacker"></param>
+    /// <param name="target"></param>
+    /// <param name="damage"></param>
+    public void ApplyDamage(Character attacker, Character target, int damage)
+    {
+        int weakenAmount = attacker.GetWeakenAmount();
+        int finalDamage = attacker.CalculateWeakenedDamage(damage);
+
+        if (weakenAmount > 0)
+        {
+            Debug.Log($"------{attacker}의 공격력이 {weakenAmount}만큼 감소함 ({damage} → {finalDamage})");
+        }
+
+        target.TakeDamage(finalDamage);
+        Debug.Log($"------{target}에게 {damage}만큼의 데미지를 줌");
+
         OnApplyDamage?.Invoke();
         MasterAudio.PlaySound("blade_whoosh");
         VFXManager.Instance.SpawnVFX(target.gameObject, VFXManager.VFXList.Hit);
@@ -119,6 +146,11 @@ public class BattleManager : MonoSingleton<BattleManager>
     public void EffectBleeding(Character target)
     {
         target.EffectBleeding();
+    }
+
+    public void UpdateWeaken(Character target)
+    {
+        target.UpdateWeaken();
     }
 
     public List<Enemy> GetEnemys()
