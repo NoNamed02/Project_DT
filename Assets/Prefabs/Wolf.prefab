@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7418472159829686867}
   - component: {fileID: 460577376076597032}
   m_Layer: 6
-  m_Name: Insect
+  m_Name: Wolf
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -30,7 +30,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 4.73, y: 0.51, z: 0}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1}
+  m_LocalScale: {x: 2, y: 1.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8825891396088663254}
@@ -84,7 +84,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 4318192556064332793, guid: f3955ec31d3d10f4e8bbbc0131f4b2c7, type: 3}
+  m_Sprite: {fileID: -3094241476321633046, guid: b2bfc3792e70adc4bbe6c8433da3f813, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -108,8 +108,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _stats:
-    _maxHP: 18
-    _hp: 18
+    _maxHP: 20
+    _hp: 20
     _shield: 0
   _identity: 1
   _statusAbnormalitys: []
@@ -160,7 +160,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 3.6571429, y: 3.6571429}
+    oldSize: {x: 3.764706, y: 3.764706}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -178,7 +178,7 @@ Animator:
   m_GameObject: {fileID: 117159429711196618}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: ea1b10c5c2b09ed4c9075942000718b3, type: 2}
+  m_Controller: {fileID: 9100000, guid: 4e45959eee6a95847bda7fca793bb70b, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -199,7 +199,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4605297856265957450}
-  - component: {fileID: 4368174908386866621}
+  - component: {fileID: 7671915377955274726}
   m_Layer: 0
   m_Name: Movement1 (2)
   m_TagString: Untagged
@@ -222,7 +222,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4507403016590900033}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4368174908386866621
+--- !u!114 &7671915377955274726
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -231,14 +231,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 929141303718881377}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9190437a8c4cf834b99254666210b331, type: 3}
+  m_Script: {fileID: 11500000, guid: 46fac4c2862dc62419201a3c62000b2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _nextStateIndex: 0
   nextAttackIndex: 2
-  beeDodgeIndex: 3
+  wolfDefenseIndex: 3
   currentHP: 0
-  _poisonStack: 2
+  _bleedingDamage: 3
+  _bleedingDuration: 2
 --- !u!1 &1693508415304690479
 GameObject:
   m_ObjectHideFlags: 0
@@ -248,7 +249,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8825891396088663254}
-  - component: {fileID: 107670250212823318}
+  - component: {fileID: 9014196477494580157}
   m_Layer: 0
   m_Name: Movement1 (1)
   m_TagString: Untagged
@@ -271,7 +272,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4507403016590900033}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &107670250212823318
+--- !u!114 &9014196477494580157
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -280,13 +281,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 1693508415304690479}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cbb3980c83f6c0f49aa8284403eeb506, type: 3}
+  m_Script: {fileID: 11500000, guid: a427d8f829062c345816094ef84d174e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _nextStateIndex: 0
   nextAttackIndex: 1
-  beeDodgeIndex: 3
+  wolfDefenseIndex: 3
   currentHP: 0
+  _damagePerHit: 4
+  _attackCount: 2
 --- !u!1 &2212482223234670391
 GameObject:
   m_ObjectHideFlags: 0
@@ -422,7 +425,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2923346580058397124}
-  - component: {fileID: 6158847515589500909}
+  - component: {fileID: 3510087067959738441}
   m_Layer: 0
   m_Name: Movement1 (4)
   m_TagString: Untagged
@@ -445,7 +448,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4507403016590900033}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6158847515589500909
+--- !u!114 &3510087067959738441
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -454,11 +457,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 7011524130213907872}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f5119417f088684680c04050ec9307b, type: 3}
+  m_Script: {fileID: 11500000, guid: 0d2eff22090c7fb40a255af4722ff06d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _nextStateIndex: 0
   nextAttackIndex: 0
+  _shieldAmount: 7
 --- !u!1 &7663794399467206475
 GameObject:
   m_ObjectHideFlags: 0
@@ -530,7 +534,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7397888254722938073}
-  - component: {fileID: 8461351744389256618}
+  - component: {fileID: 1886361083616226794}
   m_Layer: 0
   m_Name: Movement1 (3)
   m_TagString: Untagged
@@ -553,7 +557,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4507403016590900033}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8461351744389256618
+--- !u!114 &1886361083616226794
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -562,12 +566,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 8557035650057066468}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 919d50dcf4c061242b01303d9a7f8ef7, type: 3}
+  m_Script: {fileID: 11500000, guid: ce3360d0670b1b64dae0499d642ac8a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _nextStateIndex: 0
   nextAttackIndex: 0
-  beeDodgeIndex: 3
+  wolfDefenseIndex: 3
   currentHP: 0
-  _attackCount: 3
-  _damagePerHit: 3
+  _damage: 10

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7418472159829686867}
   - component: {fileID: 460577376076597032}
   m_Layer: 6
-  m_Name: Insect
+  m_Name: Plants
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -84,7 +84,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 4318192556064332793, guid: f3955ec31d3d10f4e8bbbc0131f4b2c7, type: 3}
+  m_Sprite: {fileID: 2161749188066491750, guid: db865c67e5a58884eae157c045130e6a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -108,8 +108,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _stats:
-    _maxHP: 18
-    _hp: 18
+    _maxHP: 15
+    _hp: 15
     _shield: 0
   _identity: 1
   _statusAbnormalitys: []
@@ -160,7 +160,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 3.6571429, y: 3.6571429}
+    oldSize: {x: 3.2, y: 3.2}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -178,7 +178,7 @@ Animator:
   m_GameObject: {fileID: 117159429711196618}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: ea1b10c5c2b09ed4c9075942000718b3, type: 2}
+  m_Controller: {fileID: 9100000, guid: 6fe33b2ffb62f9646a0372e58c81a59f, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -199,7 +199,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4605297856265957450}
-  - component: {fileID: 4368174908386866621}
+  - component: {fileID: 2181174547739202791}
   m_Layer: 0
   m_Name: Movement1 (2)
   m_TagString: Untagged
@@ -222,7 +222,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4507403016590900033}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4368174908386866621
+--- !u!114 &2181174547739202791
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -231,14 +231,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 929141303718881377}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9190437a8c4cf834b99254666210b331, type: 3}
+  m_Script: {fileID: 11500000, guid: 3595518dad36e0942b4a9279f0403a67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _nextStateIndex: 0
   nextAttackIndex: 2
-  beeDodgeIndex: 3
-  currentHP: 0
-  _poisonStack: 2
+  plantsHealIndex: 3
+  _weakenAmount: 2
+  _weakenDuration: 2
 --- !u!1 &1693508415304690479
 GameObject:
   m_ObjectHideFlags: 0
@@ -248,7 +248,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8825891396088663254}
-  - component: {fileID: 107670250212823318}
+  - component: {fileID: 733740403905523442}
   m_Layer: 0
   m_Name: Movement1 (1)
   m_TagString: Untagged
@@ -271,7 +271,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4507403016590900033}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &107670250212823318
+--- !u!114 &733740403905523442
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -280,13 +280,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1693508415304690479}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cbb3980c83f6c0f49aa8284403eeb506, type: 3}
+  m_Script: {fileID: 11500000, guid: 713936fcda5014449af36410efb250d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _nextStateIndex: 0
   nextAttackIndex: 1
-  beeDodgeIndex: 3
-  currentHP: 0
+  plantsHealIndex: 3
+  _damage: 8
 --- !u!1 &2212482223234670391
 GameObject:
   m_ObjectHideFlags: 0
@@ -422,7 +422,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2923346580058397124}
-  - component: {fileID: 6158847515589500909}
+  - component: {fileID: 5584939290991963158}
   m_Layer: 0
   m_Name: Movement1 (4)
   m_TagString: Untagged
@@ -445,7 +445,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4507403016590900033}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6158847515589500909
+--- !u!114 &5584939290991963158
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -454,11 +454,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 7011524130213907872}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f5119417f088684680c04050ec9307b, type: 3}
+  m_Script: {fileID: 11500000, guid: 0497ef6dc2fa9ea47a45d33cb741570c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _nextStateIndex: 0
   nextAttackIndex: 0
+  _healAmount: 6
 --- !u!1 &7663794399467206475
 GameObject:
   m_ObjectHideFlags: 0
@@ -530,7 +531,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7397888254722938073}
-  - component: {fileID: 8461351744389256618}
+  - component: {fileID: 1726177948915811643}
   m_Layer: 0
   m_Name: Movement1 (3)
   m_TagString: Untagged
@@ -553,7 +554,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4507403016590900033}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8461351744389256618
+--- !u!114 &1726177948915811643
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -562,12 +563,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 8557035650057066468}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 919d50dcf4c061242b01303d9a7f8ef7, type: 3}
+  m_Script: {fileID: 11500000, guid: e8257be60b05e8544a1c4d43f86e6e96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _nextStateIndex: 0
   nextAttackIndex: 0
-  beeDodgeIndex: 3
-  currentHP: 0
-  _attackCount: 3
-  _damagePerHit: 3
+  plantsHealIndex: 3
+  _damagePerHit: 5
+  _attackCount: 2

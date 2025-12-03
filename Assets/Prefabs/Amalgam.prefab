@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7418472159829686867}
   - component: {fileID: 460577376076597032}
   m_Layer: 6
-  m_Name: Insect
+  m_Name: Amalgam
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -37,6 +37,8 @@ Transform:
   - {fileID: 4605297856265957450}
   - {fileID: 7397888254722938073}
   - {fileID: 2923346580058397124}
+  - {fileID: 1809153268789207410}
+  - {fileID: 5925959556199543360}
   - {fileID: 744424927943454999}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -84,7 +86,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 4318192556064332793, guid: f3955ec31d3d10f4e8bbbc0131f4b2c7, type: 3}
+  m_Sprite: {fileID: -4427455402148921404, guid: 080b1d63ded2c8c4186f1cc74cccdf29, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -108,8 +110,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _stats:
-    _maxHP: 18
-    _hp: 18
+    _maxHP: 50
+    _hp: 50
     _shield: 0
   _identity: 1
   _statusAbnormalitys: []
@@ -160,7 +162,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 3.6571429, y: 3.6571429}
+    oldSize: {x: 3.4133334, y: 3.4133334}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -178,7 +180,7 @@ Animator:
   m_GameObject: {fileID: 117159429711196618}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: ea1b10c5c2b09ed4c9075942000718b3, type: 2}
+  m_Controller: {fileID: 9100000, guid: f1195b02596340a4c852b53a70d2ae8e, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -199,7 +201,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4605297856265957450}
-  - component: {fileID: 4368174908386866621}
+  - component: {fileID: 2039502965145693970}
   m_Layer: 0
   m_Name: Movement1 (2)
   m_TagString: Untagged
@@ -222,7 +224,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4507403016590900033}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4368174908386866621
+--- !u!114 &2039502965145693970
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -231,14 +233,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 929141303718881377}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9190437a8c4cf834b99254666210b331, type: 3}
+  m_Script: {fileID: 11500000, guid: 7f90c874b98f6a94f835eea1bbc140f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _nextStateIndex: 0
   nextAttackIndex: 2
-  beeDodgeIndex: 3
+  bossHealIndex: 5
   currentHP: 0
-  _poisonStack: 2
+  _baseWeakenAmount: 2
+  _weakenDuration: 2
+  _phase2Multiplier: 1.5
 --- !u!1 &1693508415304690479
 GameObject:
   m_ObjectHideFlags: 0
@@ -248,7 +252,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8825891396088663254}
-  - component: {fileID: 107670250212823318}
+  - component: {fileID: 8146458906770972229}
   m_Layer: 0
   m_Name: Movement1 (1)
   m_TagString: Untagged
@@ -271,7 +275,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4507403016590900033}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &107670250212823318
+--- !u!114 &8146458906770972229
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -280,13 +284,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 1693508415304690479}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cbb3980c83f6c0f49aa8284403eeb506, type: 3}
+  m_Script: {fileID: 11500000, guid: 6e196840e2beae04ca8b01c3d76ed038, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _nextStateIndex: 0
   nextAttackIndex: 1
-  beeDodgeIndex: 3
+  bossHealIndex: 5
   currentHP: 0
+  _baseDamage: 15
+  _Phase2Multiplier: 1.5
 --- !u!1 &2212482223234670391
 GameObject:
   m_ObjectHideFlags: 0
@@ -413,6 +419,104 @@ MonoBehaviour:
   _dodgeIcon: {fileID: 687256112725797027, guid: c1ff8af1de7c2924e872f4442d57e134, type: 3}
   _weakenIcon: {fileID: -4678919866730319718, guid: 9d830ca658ef94645ab93819835f47b7, type: 3}
   _unknownIcon: {fileID: -471607080150569171, guid: 060a332e2a5c6664081ee65bf6c4da8a, type: 3}
+--- !u!1 &3927294391197928355
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5925959556199543360}
+  - component: {fileID: 5587670976543737453}
+  m_Layer: 0
+  m_Name: Movement1 (6)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5925959556199543360
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3927294391197928355}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4507403016590900033}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5587670976543737453
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3927294391197928355}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 389f5b2f70e000d4b90b298049cf0245, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _nextStateIndex: 0
+  nextAttackIndex: 0
+  _baseHealAmount: 8
+  _phase2Multiplier: 1.5
+--- !u!1 &6890981005639546630
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1809153268789207410}
+  - component: {fileID: 237076745400467425}
+  m_Layer: 0
+  m_Name: Movement1 (5)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1809153268789207410
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6890981005639546630}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4507403016590900033}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &237076745400467425
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6890981005639546630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4624b4113c764c142b9480b0e5dada04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _nextStateIndex: 0
+  nextAttackIndex: 0
+  bossHealIndex: 5
+  currentHP: 0
+  _basePoisonStack: 3
+  _phase2Multiplier: 1.5
 --- !u!1 &7011524130213907872
 GameObject:
   m_ObjectHideFlags: 0
@@ -422,7 +526,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2923346580058397124}
-  - component: {fileID: 6158847515589500909}
+  - component: {fileID: 9109304190202326428}
   m_Layer: 0
   m_Name: Movement1 (4)
   m_TagString: Untagged
@@ -445,7 +549,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4507403016590900033}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6158847515589500909
+--- !u!114 &9109304190202326428
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -454,11 +558,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 7011524130213907872}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f5119417f088684680c04050ec9307b, type: 3}
+  m_Script: {fileID: 11500000, guid: c91c0d92b5b6760439955deb6654b330, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _nextStateIndex: 0
-  nextAttackIndex: 0
+  nextAttackIndex: 4
+  bossHealIndex: 5
+  currentHP: 0
+  _baseDamage: 3
+  _baseBleedingDamage: 4
+  _bleedingDuration: 2
+  _phase2Multiplier: 1.5
 --- !u!1 &7663794399467206475
 GameObject:
   m_ObjectHideFlags: 0
@@ -530,7 +640,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7397888254722938073}
-  - component: {fileID: 8461351744389256618}
+  - component: {fileID: 3551978865256870621}
   m_Layer: 0
   m_Name: Movement1 (3)
   m_TagString: Untagged
@@ -553,7 +663,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4507403016590900033}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8461351744389256618
+--- !u!114 &3551978865256870621
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -562,12 +672,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 8557035650057066468}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 919d50dcf4c061242b01303d9a7f8ef7, type: 3}
+  m_Script: {fileID: 11500000, guid: 997d76aa5df89484a98c9f2149474638, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _nextStateIndex: 0
-  nextAttackIndex: 0
-  beeDodgeIndex: 3
+  nextAttackIndex: 3
+  bossHealIndex: 5
   currentHP: 0
-  _attackCount: 3
-  _damagePerHit: 3
+  _baseShieldAmount: 8
+  _phase2Multiplier: 1.5
