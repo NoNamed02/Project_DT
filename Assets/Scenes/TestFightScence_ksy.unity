@@ -2701,6 +2701,7 @@ GameObject:
   - component: {fileID: 636520448}
   - component: {fileID: 636520447}
   - component: {fileID: 636520446}
+  - component: {fileID: 636520450}
   m_Layer: 5
   m_Name: StatusBarWCanvas
   m_TagString: Untagged
@@ -2791,6 +2792,28 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 1630.5, y: 917}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!95 &636520450
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 636520445}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: f1195b02596340a4c852b53a70d2ae8e, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &668780697
 GameObject:
   m_ObjectHideFlags: 0
@@ -8991,7 +9014,7 @@ PrefabInstance:
     - target: {fileID: 1755847424307337406, guid: e3b25b6bcd953d1439f10c0cde864727, type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: ea1b10c5c2b09ed4c9075942000718b3, type: 2}
+      objectReference: {fileID: 9100000, guid: 4e45959eee6a95847bda7fca793bb70b, type: 2}
     - target: {fileID: 5780473632484603796, guid: e3b25b6bcd953d1439f10c0cde864727, type: 3}
       propertyPath: m_Name
       value: Enemy
