@@ -36,6 +36,8 @@ public class BattleManager : MonoSingleton<BattleManager>
             ShowResultUI();
         }
     }
+
+
     private void ShowResultUI()
     {
         _resultUI.SetActive(true);

@@ -12,6 +12,7 @@ public class bossAttack1 : EnemyState
 
     [Header("페이즈 설정")]
     [SerializeField] private float _Phase2Multiplier = 1.5f;
+    
 
     private bool IsPhase2 => GetCurrentHP() <= GetMaxHP() * 0.5f;
 

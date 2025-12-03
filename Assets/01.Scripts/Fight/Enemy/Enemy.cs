@@ -8,6 +8,7 @@ public class Enemy : Character
 {
     private bool _acting = false;
     private int? _pendingNext = null;
+
     [SerializeField]
     private List<EnemyState> _states = new List<EnemyState>();
 
@@ -15,11 +16,22 @@ public class Enemy : Character
     [SerializeField]
     private EnemyState _currentState = null;
 
+    [Header("페이즈 설정")]
+    [SerializeField] private bool _isPhase2 = false;
+
+    public bool IsPhase2 => _isPhase2;
+
+    [Header("애니메이션 설정")]
+    [SerializeField] private Animator _animator;
+
+    public Animator Animator => _animator;
+
     // 콜백 묶음
     private Action<int> _requestChange;
     private Action _reportDone;
 
     public event Action OnIntentChanged;
+
 
     protected override void Awake()
     {
@@ -31,6 +43,10 @@ public class Enemy : Character
         }
         _requestChange = ChangeState;
         _reportDone = OnActionDone;
+
+        if (_animator == null)
+            _animator = GetComponent<Animator>();
+
         // 모든 상태에 주입
         foreach (var state in _states)
             state.BindCallbacks(_requestChange, _reportDone);
@@ -41,7 +57,6 @@ public class Enemy : Character
             TurnManager.Instance.OnTurnChanged += TurnChanged;
 
         _currentState = _states[0];
-
         _currentState.Enter();
 
         OnIntentChanged?.Invoke();
@@ -58,6 +73,8 @@ public class Enemy : Character
             _currentState.CheckStateChange();
         }
     }
+
+    
     public void RunStateCoroutine(IEnumerator routine)
     {
         StartCoroutine(routine);
@@ -155,5 +172,40 @@ public class Enemy : Character
     public EnemyState GetCurrentState()
     {
         return _currentState;
+    }
+
+    public override void Die()
+    {
+        if(_animator != null)
+        {
+            _animator.SetTrigger("isDead");
+        }
+
+        if (TurnManager.Instance != null)
+            TurnManager.Instance.OnTurnChanged -= TurnChanged;
+
+        if (_currentState != null) {
+            _currentState.Exit();
+            _currentState = null;
+        };
+        
+        base.Die();
+    }
+
+    public void TriggerPhase2()
+    {
+        if (_isPhase2) return;
+
+        _isPhase2 = true;
+
+        if (_animator != null)
+            _animator.SetTrigger("phase2");
+
+        Debug.Log($"{name} entered Phase2!");
+    }
+
+    public float GetHPRatio()
+    {
+        return (float)Stats.CurrentHP / Stats.MaxHP;
     }
 }

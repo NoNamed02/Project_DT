@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -32,13 +33,55 @@ public class Character : MonoBehaviour
     [SerializeField]
     private bool _dodge = false;
 
+    [Header("사망 애니메이션 설정")]
+    [SerializeField] private float _deathFadeDuration = 1f;
+    [SerializeField] private float _deathScaleDuration = 0.5f;
+    [SerializeField] private Ease _deathEase = Ease.InOutQuad;
+
+    private SpriteRenderer _spriteRenderer;
+    private SpriteRenderer[] _childSpriteRenderers;
+    private CanvasGroup[] _canvasGroups;
+
     protected virtual void Awake()
     {
         TurnManager.Instance.OnTurnChanged += ResetShield;
 
         if (_statusAbnormalitys == null)
             _statusAbnormalitys = new List<StatusAbnormality>();
+
+        _spriteRenderer = GetComponent<SpriteRenderer>();
+        _childSpriteRenderers = GetComponentsInChildren<SpriteRenderer>();
+        _canvasGroups = GetComponentsInChildren<CanvasGroup>();
+
+        if (TurnManager.Instance != null)
+        {
+            TurnManager.Instance.OnTurnChanged += OnTurnChanged;
+        }
     }
+
+    protected virtual void Ondestroy()
+    {
+        if (TurnManager.Instance != null)
+            TurnManager.Instance.OnTurnChanged -= OnTurnChanged;
+    }
+
+    /// <summary>
+    /// 턴 변경 시 상태이상 처리
+    /// </summary>
+    /// <param name="newOwner"></param>
+    private void OnTurnChanged(TurnManager.TurnOwner newOwner)
+    {
+        if(newOwner == _identity)
+        {
+            EffectBleeding();
+            EffectPoison();
+        }
+        else
+        {
+            UpdateWeaken();
+        }
+    }
+
     public void TakeDamage(int damage)
     {
         if (_dodge)
@@ -47,6 +90,9 @@ public class Character : MonoBehaviour
             Debug.Log("회피함");
             return;
         }
+
+        float previousHPRatio = (float)_stats.CurrentHP / _stats.MaxHP;
+
         if (_stats.Shield >= damage)
         {
             _stats.Shield -= damage;
@@ -62,6 +108,16 @@ public class Character : MonoBehaviour
         {
             _stats.CurrentHP = 0;
             Die();
+        }
+        else
+        {
+            //phase 2 전환 체크 (Enemy인 경우)
+            float currentHPRatio = (float)_stats.CurrentHP / _stats.MaxHP;
+            if(this is Enemy enemy)
+            {
+                if (previousHPRatio > 0.5f && currentHPRatio <= 0.5f)
+                    enemy.TriggerPhase2();
+            }
         }
     }
 
@@ -174,6 +230,9 @@ public class Character : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 맹독 효과: 스택(Amount) * 2 대미지, 스택 1 감소
+    /// </summary>
     public void EffectPoison()
     {
         int totalPoisonStack = 0;
@@ -236,8 +295,9 @@ public class Character : MonoBehaviour
         int maxWeaken = 0;
         foreach (var effect in _statusAbnormalitys)
         {
-            if(effect.Amount > maxWeaken)
-                maxWeaken = effect.Amount;
+            if(effect.EffectID == StatusAbnormalityNumber.weaken)
+                if(effect.Amount > maxWeaken)
+                    maxWeaken = effect.Amount;
         }
         return maxWeaken;
     }
@@ -281,17 +341,71 @@ public class Character : MonoBehaviour
     {
         return _stats.CurrentHP <= 0;
     }
-    private void Die()
+    public virtual void Die()
     {
         Debug.Log($"{name} is dead");
         if (this is Enemy)
         {
             BattleManager.Instance.GetEnemys().Remove(this as Enemy);
         }
-        gameObject.SetActive(false);
-        _statusBar.gameObject.SetActive(false);
+
+        PlayDeathAnimation();
+        /*gameObject.SetActive(false);
+        _statusBar.gameObject.SetActive(false);*/
         // Destroy(_statusBar);
         // Destroy(gameObject);
         // 사망 처리 로직
+    }
+
+    private void PlayDeathAnimation()
+    {
+        DG.Tweening.Sequence deathSequence = DOTween.Sequence();
+
+        //스프라이트 페이드아웃
+        if(_spriteRenderer != null)
+        {
+            deathSequence.Join(
+                _spriteRenderer.DOFade(0f, _deathFadeDuration).SetEase(_deathEase));
+        }
+
+        //자식 스프라이트들 페이드 아웃
+        if(_childSpriteRenderers != null)
+        {
+            foreach (var sr in _childSpriteRenderers)
+            {
+                if(sr != null)
+                {
+                    deathSequence.Join(
+                        sr.DOFade(0f, _deathFadeDuration).SetEase(_deathEase));
+                }
+            }
+        }
+
+        if(_canvasGroups != null) {
+            foreach (var cg in _canvasGroups)
+            {
+                if(cg != null)
+                {
+                    deathSequence.Join(cg.DOFade(0f, _deathFadeDuration).SetEase(_deathEase));
+                }
+            }
+        }
+
+        //스케일 축소
+        deathSequence.Join(
+            transform.DOScale(Vector3.zero, _deathScaleDuration).SetEase(Ease.InBack).SetDelay(_deathFadeDuration - _deathScaleDuration));
+
+        //애니메이션 완료 후 오브젝트 비활성화
+        deathSequence.OnComplete(() =>
+        {
+            if (_statusBar != null)
+                _statusBar.gameObject.SetActive(false);
+
+            gameObject.SetActive(false);
+
+
+        });
+
+        deathSequence.Play();
     }
 }

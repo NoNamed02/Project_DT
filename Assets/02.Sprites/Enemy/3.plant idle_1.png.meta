@@ -1,22 +1,22 @@
 fileFormatVersion: 2
-guid: 43fd7912a7b6f0849b90dd24af912568
+guid: db865c67e5a58884eae157c045130e6a
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 5896104979113431205
-    second: 2.wolf die_0
+      213: 2161749188066491750
+    second: 3.plant idle_1_0
   - first:
-      213: -4766718236548952865
-    second: 2.wolf die_1
+      213: 6111661445636282824
+    second: 3.plant idle_1_1
   - first:
-      213: -1818347787171540953
-    second: 2.wolf die_2
+      213: 6604335152382106673
+    second: 3.plant idle_1_2
   - first:
-      213: -6540757255782841517
-    second: 2.wolf die_3
+      213: -3207770197774879440
+    second: 3.plant idle_1_3
   - first:
-      213: 1354481786715470867
-    second: 2.wolf die_4
+      213: -3243487641678456717
+    second: 3.plant idle_1_4
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -63,7 +63,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 34
+  spritePixelsToUnits: 40
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -121,24 +121,11 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: iOS
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: 2.wolf die_0
+      name: 3.plant idle_1_0
       rect:
         serializedVersion: 2
         x: 0
@@ -153,14 +140,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 5a0d7765d3c23d150800000000000000
-      internalID: 5896104979113431205
+      spriteID: 66d3130ee63100e10800000000000000
+      internalID: 2161749188066491750
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 2.wolf die_1
+      name: 3.plant idle_1_1
       rect:
         serializedVersion: 2
         x: 128
@@ -175,14 +162,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: fdc8f1ed40739ddb0800000000000000
-      internalID: -4766718236548952865
+      spriteID: 8c9d99e24bbf0d450800000000000000
+      internalID: 6111661445636282824
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 2.wolf die_2
+      name: 3.plant idle_1_2
       rect:
         serializedVersion: 2
         x: 256
@@ -197,14 +184,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 720d583525ee3c6e0800000000000000
-      internalID: -1818347787171540953
+      spriteID: 13c5c5f64df47ab50800000000000000
+      internalID: 6604335152382106673
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 2.wolf die_3
+      name: 3.plant idle_1_3
       rect:
         serializedVersion: 2
         x: 384
@@ -219,14 +206,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 35341072eef8a35a0800000000000000
-      internalID: -6540757255782841517
+      spriteID: 0353b882006bb73d0800000000000000
+      internalID: -3207770197774879440
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 2.wolf die_4
+      name: 3.plant idle_1_4
       rect:
         serializedVersion: 2
         x: 512
@@ -241,8 +228,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 31c79e732061cc210800000000000000
-      internalID: 1354481786715470867
+      spriteID: 378d264bc21dcf2d0800000000000000
+      internalID: -3243487641678456717
       vertices: []
       indices: 
       edges: []
@@ -251,7 +238,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 498259330e6d2d3409e997d664d13ce8
+    spriteID: fdb4cffd9a50bf240844b812b364c502
     internalID: 0
     vertices: []
     indices: 
@@ -261,11 +248,11 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      2.wolf die_0: 5896104979113431205
-      2.wolf die_1: -4766718236548952865
-      2.wolf die_2: -1818347787171540953
-      2.wolf die_3: -6540757255782841517
-      2.wolf die_4: 1354481786715470867
+      3.plant idle_1_0: 2161749188066491750
+      3.plant idle_1_1: 6111661445636282824
+      3.plant idle_1_2: 6604335152382106673
+      3.plant idle_1_3: -3207770197774879440
+      3.plant idle_1_4: -3243487641678456717
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
