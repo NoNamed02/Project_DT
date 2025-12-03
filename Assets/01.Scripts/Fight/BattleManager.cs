@@ -33,6 +33,7 @@ public class BattleManager : MonoSingleton<BattleManager>
         if (_enemys.Count == 0 && !_isBattleEnd)
         {
             _isBattleEnd = true;
+            RunTimeData.Instance.HP = _player.Stats.CurrentHP;
             ShowResultUI();
         }
     }
