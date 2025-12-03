@@ -43,7 +43,7 @@ public class beeAttack3 : EnemyState
     public override void CheckStateChange()
     {
         base.CheckStateChange();
-        if (GetCurrentHP() >= currentHP && currentHP != GetMaxHP())
+        if (GetCurrentHP() <= currentHP - 5)
             RequestStateChange(beeDodgeIndex);
     }
 
